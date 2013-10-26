@@ -45,8 +45,9 @@ if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
 fi
 
-# MacPorts Installer addition on 2012-11-23_at_23:17:09: adding an appropriate PATH variable for use with MacPorts.
-export PATH=/opt/local/bin:/opt/local/sbin:$PATH
-# Finished adapting your PATH environment variable for use with MacPorts.
-export PATH=~/Development/arm-cs-tools/bin:$PATH
-
+if [ "$(uname)" == "Darwin" ]; then
+   # MacPorts Installer addition on 2012-11-23_at_23:17:09: adding an appropriate PATH variable for use with MacPorts.
+   export PATH=/opt/local/bin:/opt/local/sbin:$PATH
+   # Finished adapting your PATH environment variable for use with MacPorts.
+   export PATH=~/Development/arm-cs-tools/bin:$PATH
+fi
