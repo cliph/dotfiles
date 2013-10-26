@@ -14,28 +14,28 @@ export EDITOR=vim
 
 # Functions
 if [ "$(uname)" == "Darwin" ]; then
-mvtorrent ()
-   {
-      # Move files from a given extension from a given location to another given location
-      src=~/Downloads
-      dst=~/Dropbox/Downloads/torrents/
-      ext=torrent
-      IFS=$(echo -en "\n\b")
-      shopt -s nullglob
-      if [ ! -z "`echo $src/*.$ext`" ];
-      then
-         for file in $src/*.$ext
-         do
-            echo "Moving `basename "$file"` ..."
-            mv "$file" $dst
-         done
-         echo "Done."
-      else
-         echo "No torrents in $src."
-         return 1
-      fi
-   }
-fi
+   mvtorrent ()
+      {
+         # Move files from a given extension from a given location to another given location
+         src=~/Downloads
+         dst=~/Dropbox/Downloads/torrents/
+         ext=torrent
+         IFS=$(echo -en "\n\b")
+         shopt -s nullglob
+         if [ ! -z "`echo $src/*.$ext`" ];
+         then
+            for file in $src/*.$ext
+            do
+               echo "Moving `basename "$file"` ..."
+               mv "$file" $dst
+            done
+            echo "Done."
+         else
+            echo "No torrents in $src."
+            return 1
+         fi
+      }
+   fi
 
 # if running bash
 if [ -n "$BASH_VERSION" ]; then
