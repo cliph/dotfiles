@@ -13,20 +13,6 @@ alias mcam="mosh cam"
 #    alias m$machine="mosh $machine"
 # done
    
-homehosts=(mini tertimi)
-
-if [[ "$(hostname)" = *home.cli.ph* ]]; then
-   for host in "${homehosts[@]}"
-   do
-      alias $host="ssh $host.local"
-   done
-else
-   for host in "${homehosts[@]}"
-   do
-      alias $host="ssh $host"
-   done
-fi
-
 alias homeshick="source $HOME/.homesick/repos/homeshick/bin/homeshick.sh"
 alias hs="homeshick"
 homeshick --quiet refresh
@@ -73,6 +59,20 @@ if [ $platform == "Darwin" ]; then
    # MacPorts Installer addition on 2012-11-23_at_23:17:09: adding an appropriate PATH variable for use with MacPorts.
    export PATH=/opt/local/bin:/opt/local/sbin:$PATH
    # Finished adapting your PATH environment variable for use with MacPorts.
+
+   if [[ "$(hostname)" = *home.cli.ph* ]]; then
+      homehosts=(mini tertimi)
+      for host in "${homehosts[@]}"
+      do
+         alias $host="ssh $host.local"
+      done
+   else
+      for host in "${homehosts[@]}"
+      do
+         alias $host="ssh $host"
+      done
+   fi
+
    alias ls='ls -GF'
 
 elif [ $platform == 'Linux' ]; then

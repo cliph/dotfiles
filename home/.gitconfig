@@ -15,3 +15,6 @@
 
 [alias]
    s = status
+
+[push]
+	default = simple
