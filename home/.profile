@@ -3,11 +3,17 @@ alias btcli="~/Development/transmission-remote-cli/transmission-remote-cli"
 alias mu="mosh unixadmin"
 alias mc="mosh cli.ph"
 
+if [[ "$(hostname)" = *home.cli.ph* ]]; then
+   alias mini="ssh mini.local"
+   alias tertimi="ssh tertimi.local"
+else
+   alias mini="ssh mini"
+   alias tertimi="ssh tertimi"
+fi
 
 alias homeshick="source $HOME/.homesick/repos/homeshick/bin/homeshick.sh"
 alias hs="homeshick"
 homeshick --quiet refresh
-
 
 # Variables
 export EDITOR=vim
@@ -31,15 +37,13 @@ if [ "$(uname)" == "Darwin" ]; then
             done
             echo "Done."
          else
-            echo "No torrents in $src."
+            echo "No ${ext}s in $src."
             return 1
          fi
       }
    fi
 
-# if running bash
 if [ -n "$BASH_VERSION" ]; then
-    # include .bashrc if it exists
     if [ -f "$HOME/.bashrc" ]; then
         . "$HOME/.bashrc"
     fi
@@ -54,5 +58,4 @@ if [ "$(uname)" == "Darwin" ]; then
    # MacPorts Installer addition on 2012-11-23_at_23:17:09: adding an appropriate PATH variable for use with MacPorts.
    export PATH=/opt/local/bin:/opt/local/sbin:$PATH
    # Finished adapting your PATH environment variable for use with MacPorts.
-   export PATH=~/Development/arm-cs-tools/bin:$PATH
 fi
