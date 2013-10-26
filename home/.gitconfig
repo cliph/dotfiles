@@ -17,4 +17,4 @@
    s = status
 
 [push]
-	default = simple
+	default = matching 
