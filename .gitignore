@@ -1,0 +1,5 @@
+.DS_Store
+*.swp
+*_rsa
+*_dsa
+known_hosts
