@@ -1,7 +1,6 @@
 .irqhashtagrc
 .DS_Store
 *.swp
-id_rsa
-id_dsa
 *_rsa
 *_dsa
+known_hosts

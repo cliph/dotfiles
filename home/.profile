@@ -3,6 +3,9 @@ alias btcli="~/Development/transmission-remote-cli/transmission-remote-cli"
 alias mu="mosh unixadmin"
 alias mc="mosh cli.ph"
 
+alias homeshick="source $HOME/.homesick/repos/homeshick/bin/homeshick.sh"
+alias hs="homeshick"
+
 # Variables
 export EDITOR=vim
 
