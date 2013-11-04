@@ -90,5 +90,5 @@ if [ $platform == "Darwin" ]; then
 
 elif [ $platform == 'Linux' ]; then
    alias ls='ls -GF --color=auto'
-   alias update="sudo apt-get update && sudo apt-get dist-upgrade && apt-get autoclean"
+   alias upgrade="sudo apt-get update && sudo apt-get dist-upgrade && sudo apt-get autoremove && sudo apt-get clean"
 fi
