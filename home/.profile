@@ -39,6 +39,13 @@ alias hs="homeshick"
 alias cddot="hs cd dotfiles"
 homeshick --quiet refresh
 
+alias grep='grep --color=auto'
+alias more='less'
+alias df='df -h'
+alias du='du -c -h'
+alias mkdir='mkdir -p -v'
+
+
 export EDITOR=vim
 
 if [ -n "$BASH_VERSION" ]; then
@@ -79,7 +86,9 @@ if [ $platform == "Darwin" ]; then
    export PATH=/opt/local/bin:/opt/local/sbin:$PATH
 
    alias ls='ls -GF'
+   alias update="sudo port selfupdate && sudo port upgrade outdated"
 
 elif [ $platform == 'Linux' ]; then
    alias ls='ls -GF --color=auto'
+   alias update="sudo apt-get update && sudo apt-get dist-upgrade && apt-get autoclean"
 fi

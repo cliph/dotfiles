@@ -11,6 +11,13 @@ export HISTCONTROL=$HISTCONTROL${HISTCONTROL+,}ignoredups
 # ... or force ignoredups and ignorespace
 export HISTCONTROL=ignoreboth
 
+if [ ${BASH_VERSINFO} -ge 4 ];
+then
+   shopt -s autocd
+fi
+
+shopt -s cdspell
+
 # append to the history file, don't overwrite it
 shopt -s histappend
 
