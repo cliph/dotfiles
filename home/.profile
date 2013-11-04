@@ -34,7 +34,7 @@ fi
 #    alias m$machine="mosh $machine"
 # done
   
-source ~/.homesick/repos/homeshick/homeshick.sh
+source $HOME/.homesick/repos/homeshick/homeshick.sh
 alias hs="homeshick"
 alias cddot="hs cd dotfiles"
 homeshick --quiet refresh
