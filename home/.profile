@@ -1,9 +1,30 @@
 # Aliases
-alias btcli="~/Development/transmission-remote-cli/transmission-remote-cli"
-alias mu="mosh unixadmin"
-alias mc="mosh cli.ph"
-alias ma="mosh ascii"
-alias mcam="mosh cam"
+if [ -d ~/Development/transmission-remote-cli/ ]; then
+   alias btcli="~/Development/transmission-remote-cli/transmission-remote-cli"
+fi
+
+# alias vl='vim $(!!)'
+
+hash mosh &> /dev/null
+if [ $? -eq 1 ]; then
+   alias mu="mosh unixadmin"
+   alias mc="mosh cli.ph"
+   alias ma="mosh ascii"
+   alias mcam="mosh cam"
+fi
+
+if [[ "$(hostname)" = *home.cli.ph* ]]; then
+   homehosts=(mini tertimi)
+   for host in "${homehosts[@]}"
+   do
+      alias $host="ssh $host.local"
+   done
+else
+   for host in "${homehosts[@]}"
+   do
+      alias $host="ssh $host"
+   done
+fi
 
 # alias machine_list="cat ~/.ssh/config | egrep '^Host' | grep -v '\*' | cut -d ' ' -f 2"
 # 
@@ -12,12 +33,12 @@ alias mcam="mosh cam"
 #    alias $machine="ssh $machine"
 #    alias m$machine="mosh $machine"
 # done
-   
-alias homeshick="source $HOME/.homesick/repos/homeshick/bin/homeshick.sh"
+  
+source ~/.homesick/repos/homeshick/homeshick.sh
 alias hs="homeshick"
+alias cddot="hs cd dotfiles"
 homeshick --quiet refresh
 
-# Variables
 export EDITOR=vim
 
 if [ -n "$BASH_VERSION" ]; then
@@ -26,7 +47,6 @@ if [ -n "$BASH_VERSION" ]; then
     fi
 fi
   
-# set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
 fi
@@ -56,26 +76,10 @@ if [ $platform == "Darwin" ]; then
          fi
       }
 
-   # MacPorts Installer addition on 2012-11-23_at_23:17:09: adding an appropriate PATH variable for use with MacPorts.
    export PATH=/opt/local/bin:/opt/local/sbin:$PATH
-   # Finished adapting your PATH environment variable for use with MacPorts.
-
-   if [[ "$(hostname)" = *home.cli.ph* ]]; then
-      homehosts=(mini tertimi)
-      for host in "${homehosts[@]}"
-      do
-         alias $host="ssh $host.local"
-      done
-   else
-      for host in "${homehosts[@]}"
-      do
-         alias $host="ssh $host"
-      done
-   fi
 
    alias ls='ls -GF'
 
 elif [ $platform == 'Linux' ]; then
    alias ls='ls -GF --color=auto'
 fi
-
