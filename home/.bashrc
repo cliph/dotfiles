@@ -11,9 +11,6 @@ export HISTCONTROL=$HISTCONTROL${HISTCONTROL+,}ignoredups
 # ... or force ignoredups and ignorespace
 export HISTCONTROL=ignoreboth
 
-export LC_CTYPE=en_US.UTF-8
-export LC_ALL=en_US.UTF-8
-
 if [ ${BASH_VERSINFO} -ge 4 ];
 then
    shopt -s autocd
