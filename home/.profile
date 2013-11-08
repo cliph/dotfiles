@@ -1,6 +1,7 @@
 # Aliases
 if [ -d ~/Development/transmission-remote-cli/ ]; then
    alias btcli="~/Development/transmission-remote-cli/transmission-remote-cli"
+   alias bt="btcli"
 fi
 
 # alias vl='vim $(!!)'
@@ -84,6 +85,11 @@ if [ $platform == "Darwin" ]; then
       }
 
    export PATH=/opt/local/bin:/opt/local/sbin:$PATH
+   
+   if [ -d "$HOME/Development/arm-cs-tools/bin" ];
+   then
+      export PATH=$HOME/Development/arm-cs-tools/bin:$PATH
+   fi
 
    alias ls='ls -GF'
    alias update="sudo port selfupdate && sudo port upgrade outdated"
