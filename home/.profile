@@ -46,6 +46,44 @@ alias df='df -h'
 alias du='du -c -h'
 alias mkdir='mkdir -p -v'
 
+stopsocks () 
+{
+pkill -f "ssh -D"
+sudo networksetup -setsocksfirewallproxystate Ethernet off
+}
+
+startsocks ()
+{
+   if [ $# -lt 1 ];
+   then
+      echo "Usage ${FUNCNAME[0]} <host>"
+      return 1
+   fi
+   stopsocks
+   host=$1
+   if [ ! -z $2 ]
+   then
+      port=$2
+   else
+      port=8080
+   fi
+   ssh -D $port -f -N $host
+   echo -n "Update proxy settings to use $host:$port [Y/n] "
+   read answer
+   case "$answer" in
+      n|N)
+         stopsocks
+         return 1
+         ;;
+      y|Y|*)
+         sudo networksetup -setsocksfirewallproxy Ethernet localhost $port
+         sudo networksetup -setsocksfirewallproxystate Ethernet on
+         ;;
+         esac
+}
+
+alias socku="startsocks unixadmin.ca"
+alias sockc="startsocks www.cli.ph"
 
 export EDITOR=vim
 
@@ -98,3 +136,13 @@ elif [ $platform == 'Linux' ]; then
    alias ls='ls -GF --color=auto'
    alias upgrade="sudo apt-get update && sudo apt-get dist-upgrade && sudo apt-get autoremove && sudo apt-get clean"
 fi
+
+if [ -d "$HOME/bin/scripts/clients" ];
+then
+   for file in `find $HOME/bin/scripts/clients -type f | grep -v .swp`
+   do
+      source $file
+   done
+fi
+
+
