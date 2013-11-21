@@ -14,6 +14,11 @@ if [ $? -eq 1 ]; then
    alias mcam="mosh cam"
 fi
 
+hash pwgen &> /dev/null
+if [ $? -eq 1 ]; then
+   alias genpw="pwgen -cnyB1 10"
+fi
+
 if [[ "$(hostname)" = *home.cli.ph* ]]; then
    homehosts=(mini tertimi)
    for host in "${homehosts[@]}"
@@ -45,6 +50,8 @@ alias more='less'
 alias df='df -h'
 alias du='du -c -h'
 alias mkdir='mkdir -p -v'
+
+alias reload='clear; source ~/.profile'
 
 export EDITOR=vim
 
@@ -121,6 +128,88 @@ if [ $platform == "Darwin" ]; then
 
    alias socku="startsocks unixadmin.ca"
    alias sockc="startsocks www.cli.ph"
+
+   bnchost=unixadmin.ca
+
+   tunnel ()
+   {
+      if [ $# -ne 2 ];
+      then
+         echo "Usage ${FUNCNAME[0]} <host> <rport> <thost>"
+         return 1
+      fi
+      host=$1
+      rport=$2
+      if [ $3 ];
+      then
+         thost=$3
+      else
+         thost=$bnchost
+      fi
+
+      if [ ${#rport} -eq 3 ];
+      then
+         lport=8$rport
+      else
+         lport=$rport
+      fi
+         
+      echo -n "Create tunnel to $host:$rport via $thost? [Y/n] "
+      read answer
+      case "$answer" in
+         n|N)
+            return 1
+            ;;
+         y|Y|*)
+            # echo ssh -v -f -N -L $lport:$host:$rport $thost
+            ssh -f -N -L $lport:$host:$rport $thost
+            if [ $? -ne 0 ];
+            then
+               echo "SSH error"
+               return 1 
+            fi
+            sshpid=$!
+            echo
+            ;;
+            esac
+      nc -z localhost $lport
+      if [ $? -ne 0 ];
+      then
+         echo "Port $lport doesn't seem to be open"
+         kill $sshpid
+         return 1
+      fi
+      echo -n "Would you like to open https://localhost:$lport/ [Y/n] "
+      read answer
+      case "$answer" in
+         n|N)
+            ;;
+         y|Y|*)
+            open https://localhost:$lport/
+            echo
+            ;;
+            esac
+   }
+
+   teardown () {
+   for pid in `ps x|egrep  '[s]sh | -[L] '|cut -f1 -d' '`
+   do
+      echo -n "Killing $pid ... "
+      kill $pid
+      echo "Done."
+   done
+   }
+
+   tunnels () {
+      tnnels=`ps x | egrep '[s]sh | -[L] '`
+      if [ $? -eq 1 ];
+      then
+         echo "No tunnels."
+      else
+         numtuns=`echo $tnnels|wc -l`
+         echo "$numtuns tunnel(s)."
+      fi
+   }
 
 
    export PATH=/opt/local/bin:/opt/local/sbin:$PATH
