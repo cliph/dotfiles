@@ -220,6 +220,9 @@ if [ $platform == "Darwin" ]; then
    fi
 
    alias ls='ls -GF'
+   alias l='ls -lGF'
+   alias la='ls -laGF'
+
    alias update="sudo port selfupdate && sudo port upgrade outdated"
 
 elif [ $platform == 'Linux' ]; then

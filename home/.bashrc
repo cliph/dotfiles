@@ -72,6 +72,12 @@ xterm*|rxvt*)
     ;;
 esac
 
+if [[ $COLORTERM = gnome-* && $TERM = xterm ]] && infocmp gnome-256color >/dev/null 2>&1; then
+        export TERM=gnome-256color
+elif infocmp xterm-256color >/dev/null 2>&1; then
+        export TERM=xterm-256color
+fi
+
 # Alias definitions.
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
@@ -105,4 +111,5 @@ if [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
 fi
 
+# export PROMPT_COMMAND='echo -ne "\033]0;${PWD##*/}\007"'
 export EDITOR=vi
