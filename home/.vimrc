@@ -12,5 +12,10 @@ set modeline   " will automatically scan files for magic comments
 set nowrap
 syntax on
 
+set ls=2
+set number
+set statusline=%t[%{strlen(&fenc)?&fenc:'none'},%{&ff}]%h%m%r%y%=%c,%l/%L\ %P
+
+
 filetype plugin indent on
 
