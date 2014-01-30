@@ -232,7 +232,7 @@ fi
 
 if [ -d "$HOME/bin/scripts/clients" ];
 then
-   for file in `find $HOME/bin/scripts/clients -type f | grep -v .swp`
+   for file in `find $HOME/bin/scripts/clients -type f -maxdepth 2 | grep -v .swp`
    do
       source $file
    done
