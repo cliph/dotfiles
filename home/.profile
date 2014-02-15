@@ -50,6 +50,9 @@ alias more='less'
 alias df='df -h'
 alias du='du -c -h'
 alias mkdir='mkdir -p -v'
+alias +='pushd'
+alias -- -='popd'
+alias ?='dirs -v'
 
 alias reload='clear; source ~/.profile'
 
