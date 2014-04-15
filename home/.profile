@@ -7,13 +7,13 @@ fi
 # alias vl='vim $(!!)'
 
 # hash mosh &> /dev/null
-which mosh &> /dev/null
-if [ $? -eq 0 ]; then
-   alias mu="mosh unixadmin"
-   alias mc="mosh cli.ph"
-   alias ma="mosh ascii"
-   alias mcam="mosh cam"
-fi
+# which mosh &> /dev/null
+# if [ $? -eq 0 ]; then
+alias mu="mosh unixadmin"
+alias mc="mosh cli.ph"
+alias ma="mosh ascii"
+alias mcam="mosh cam"
+# fi
 
 hash pwgen &> /dev/null
 if [ $? -eq 1 ]; then
