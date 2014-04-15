@@ -72,12 +72,12 @@ fi
 platform=`uname`
 
 if [ $platform == "Darwin" ]; then
-   mvtorrent ()
+   mvt ()
       {
          # Move files from a given extension from a given location to another given location
          src=~/Downloads
-         dst=~/.torrents/
-         ext=torrent
+         dst=~/.t????n?s/
+         ext=t*n*t
          IFS=$(echo -en "\n\b")
          shopt -s nullglob
          if [ ! -z "`echo $src/*.$ext`" ];
