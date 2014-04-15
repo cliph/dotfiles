@@ -8,7 +8,7 @@ fi
 
 # hash mosh &> /dev/null
 which mosh &> /dev/null
-if [ $? -eq 1 ]; then
+if [ $? -eq 0 ]; then
    alias mu="mosh unixadmin"
    alias mc="mosh cli.ph"
    alias ma="mosh ascii"
