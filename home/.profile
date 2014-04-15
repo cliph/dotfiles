@@ -75,7 +75,7 @@ if [ $platform == "Darwin" ]; then
       {
          # Move files from a given extension from a given location to another given location
          src=~/Downloads
-         dst=~/Dropbox/Downloads/torrents/
+         dst=~/.torrents/
          ext=torrent
          IFS=$(echo -en "\n\b")
          shopt -s nullglob
