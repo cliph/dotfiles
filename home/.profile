@@ -6,7 +6,8 @@ fi
 
 # alias vl='vim $(!!)'
 
-hash mosh &> /dev/null
+# hash mosh &> /dev/null
+which mosh &> /dev/null
 if [ $? -eq 1 ]; then
    alias mu="mosh unixadmin"
    alias mc="mosh cli.ph"
