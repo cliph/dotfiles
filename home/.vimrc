@@ -11,6 +11,8 @@ set expandtab
 set modeline   " will automatically scan files for magic comments
 set nowrap
 syntax on
+set ai
+
 
 set ls=2
 set number
