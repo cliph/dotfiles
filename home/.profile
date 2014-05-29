@@ -75,23 +75,26 @@ if [ $platform == "Darwin" ]; then
    mvt ()
       {
          # Move files from a given extension from a given location to another given location
-         src=~/Downloads
-         dst=~/.t????n?s/
+         base=~/
+         srcs=(Downloads Desktop)
+         dst=.t????n?s
          ext=t*n*t
          IFS=$(echo -en "\n\b")
          shopt -s nullglob
-         if [ ! -z "`echo $src/*.$ext`" ];
-         then
-            for file in $src/*.$ext
-            do
-               echo "Moving `basename "$file"` ..."
-               mv "$file" $dst
-            done
-            echo "Done."
-         else
-            echo "No ${ext}s in $src."
-            return 1
-         fi
+         for src in ${srcs[@]}; do
+            if [ ! -z "`echo $base${src}/*.$ext`" ];
+            then
+               for file in $base${src}/*.$ext
+               do
+                  echo "Moving `basename "$file"` ..."
+                  mv "$file" $base$dst/
+               done
+               echo "Done."
+            else
+               echo "No ${ext}s in $base${src}."
+               # return 1
+            fi
+         done
       }
 
    stopsocks () 
