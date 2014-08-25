@@ -1,7 +1,8 @@
 # Aliases
 if [ -d ~/Development/transmission-remote-cli/ ]; then
    alias btcli="~/Development/transmission-remote-cli/transmission-remote-cli"
-   alias bt="btcli"
+   # alias bt="btcli"
+   alias bt="mvt && btcli"
 fi
 
 # alias vl='vim $(!!)'
@@ -13,6 +14,7 @@ alias mu="mosh unixadmin"
 alias mc="mosh cli.ph"
 alias ma="mosh ascii"
 alias mcam="mosh cam"
+alias hammer="ssh hammer"
 # fi
 
 hash pwgen &> /dev/null
