@@ -2,7 +2,7 @@
 if [ -d ~/Development/transmission-remote-cli/ ]; then
    alias btcli="~/Development/transmission-remote-cli/transmission-remote-cli"
    # alias bt="btcli"
-   alias bt="mvt && btcli"
+   alias bt="mvt & btcli"
 fi
 
 # alias vl='vim $(!!)'
