@@ -229,7 +229,7 @@ if [ $platform == "Darwin" ]; then
       IFS=$'\n'
       
       vpn_status() {
-         if [ $numargs -eq 0 ]; then 
+         if [ $#  -eq 0 ]; then 
             for vpn in  `networksetup -listallnetworkservices|grep -v \*|grep VPN`;
                do
                   echo -n "${vpn}: "
@@ -267,7 +267,7 @@ if [ $platform == "Darwin" ]; then
          if vpn_status $arg >/dev/null; then
             echo "VPN is already up"
          else
-            echo "Starting $vpn_name ... "
+            echo -n "Starting $vpn_name ... "
             # networksetup -connectpppoeservice \"$vpn_name\"
             # echo networksetup -connectpppoeservice \"$vpn_name\"
             # vpn_status | grep connected
@@ -293,11 +293,15 @@ EOF
       }
 
       vpn_stop () {
-         echo "Stopping $vpn_name ... "
-         # echo networksetup -disconnectpppoeservice \"$vpn_name\"
-         # networksetup -disconnectpppoeservice \"$vpn_name\"
-         # echo scutil --nc stop $vpn_name
-         # scutil --nc stop $vpn_name
+         if [ $# -eq 1 ]; then
+            vpn_name=$1
+         fi
+
+            echo -n "Stopping $vpn_name ... "
+            # echo networksetup -disconnectpppoeservice \"$vpn_name\"
+            # networksetup -disconnectpppoeservice \"$vpn_name\"
+            # echo scutil --nc stop $vpn_name
+            # scutil --nc stop $vpn_name
 /usr/bin/env osascript <<-EOF
 tell application "System Events"
         tell current location of network preferences
@@ -307,13 +311,27 @@ tell application "System Events"
 end tell
 return
 EOF
-         vpn_status $vpn_name
+            vpn_status $vpn_name
       }
 
       if [ $# -eq 1 ]; then
          arg=$1
-         vpn_name=`networksetup -listallnetworkservices|grep -v \*|grep VPN|grep -i $arg`
-         vpn_status $vpn_name
+         if [ $arg = "stop" ]; then
+            # vpn_status 
+            # vpn_status | grep " connected" | cut -f1 -d\:
+            running_vpn=`vpn_status | grep " connected" | cut -f1 -d\:`
+            # echo $running_vpn
+            if [ -z "$running_vpn" ]; then
+               echo "No active VPN"
+               # echo $running_vpn
+            else
+               vpn_stop $running_vpn
+            fi
+            
+         else
+            vpn_name=`networksetup -listallnetworkservices|grep -v \*|grep VPN|grep -i $arg`
+            vpn_status $vpn_name
+         fi
       elif [ $# -eq 2 ]; then
          arg=$1
          action=$2
