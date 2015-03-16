@@ -5,6 +5,10 @@ if [ -d ~/Development/transmission-remote-cli/ ]; then
    alias bt="mvt & btcli"
 fi
 
+if [ -d ~/Development/scripts/teksavvy/ ]; then
+   alias tsq="~/Development/scripts/teksavvy/quota.py"
+fi
+
 # alias vl='vim $(!!)'
 
 # hash mosh &> /dev/null
@@ -220,6 +224,115 @@ if [ $platform == "Darwin" ]; then
       fi
    }
 
+   vpn () {
+      numargs=$#
+      IFS=$'\n'
+      
+      vpn_status() {
+         if [ $numargs -eq 0 ]; then 
+            for vpn in  `networksetup -listallnetworkservices|grep -v \*|grep VPN`;
+               do
+                  echo -n "${vpn}: "
+                  networksetup -showpppoestatus ${vpn}
+               done
+         else
+            echo -n "$vpn_name: "
+            result=`networksetup -showpppoestatus $vpn_name`
+            echo $result
+            if `echo $result | grep -qv "disconnected"`; then
+               return 0
+            else
+               return 1
+            fi
+         fi 
+      }
+     
+      poll () {
+         loops=0
+         maxloops=200
+
+         echo "Polling ..."
+
+         while vpn_status; do
+            sleep 0.1
+            let loops=$loops+1
+            echo $loops
+            [ $loops -lt $maxloops ] && break
+         done
+
+         [ $loops -le $maxloops ]
+      }
+
+      vpn_start () {
+         if vpn_status $arg >/dev/null; then
+            echo "VPN is already up"
+         else
+            echo "Starting $vpn_name ... "
+            # networksetup -connectpppoeservice \"$vpn_name\"
+            # echo networksetup -connectpppoeservice \"$vpn_name\"
+            # vpn_status | grep connected
+            # if poll; then
+            #    echo "Connected"
+            # else
+            #    echo "Did not connect"
+            #    vpn_stop
+            # fi
+/usr/bin/env osascript <<-EOF
+tell application "System Events"
+        tell current location of network preferences
+                set VPN to service "$vpn_name"
+                if exists VPN then connect VPN
+                repeat while (current configuration of VPN is not connected)
+                    delay 1
+                end repeat
+        end tell
+end tell
+EOF
+            vpn_status $vpn_name
+         fi
+      }
+
+      vpn_stop () {
+         echo "Stopping $vpn_name ... "
+         # echo networksetup -disconnectpppoeservice \"$vpn_name\"
+         # networksetup -disconnectpppoeservice \"$vpn_name\"
+         # echo scutil --nc stop $vpn_name
+         # scutil --nc stop $vpn_name
+/usr/bin/env osascript <<-EOF
+tell application "System Events"
+        tell current location of network preferences
+                set VPN to service "$vpn_name"
+                if exists VPN then disconnect VPN
+        end tell
+end tell
+return
+EOF
+         vpn_status $vpn_name
+      }
+
+      if [ $# -eq 1 ]; then
+         arg=$1
+         vpn_name=`networksetup -listallnetworkservices|grep -v \*|grep VPN|grep -i $arg`
+         vpn_status $vpn_name
+      elif [ $# -eq 2 ]; then
+         arg=$1
+         action=$2
+         vpn_name=`networksetup -listallnetworkservices|grep -v \*|grep VPN|grep -i $arg`
+         case "$action" in
+               start)
+                  vpn_start
+                  ;;
+               stop)
+                  vpn_stop
+                  ;;
+            esac
+      else
+         vpn_status
+      fi
+
+      # echo $arg
+      # echo $vpn_name
+   }
 
    export PATH=/opt/local/bin:/opt/local/sbin:$PATH
    
@@ -246,4 +359,13 @@ then
       source $file
    done
 fi
+
+
+##
+# Your previous /Users/cliph/.profile file was backed up as /Users/cliph/.profile.macports-saved_2015-02-23_at_02:16:53
+##
+
+# MacPorts Installer addition on 2015-02-23_at_02:16:53: adding an appropriate PATH variable for use with MacPorts.
+export PATH="/opt/local/bin:/opt/local/sbin:$PATH"
+# Finished adapting your PATH environment variable for use with MacPorts.
 
