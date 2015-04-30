@@ -5,6 +5,10 @@ if [ -d ~/Development/transmission-remote-cli/ ]; then
    alias bt="mvt & btcli"
 fi
 
+if [ -d ~/Development/scripts/teksavvy/ ]; then
+   alias tsq="~/Development/scripts/teksavvy/quota.py"
+fi
+
 # alias vl='vim $(!!)'
 
 # hash mosh &> /dev/null
@@ -135,8 +139,14 @@ if [ $platform == "Darwin" ]; then
             esac
    }
 
+   alias ll="ls -lah"
+   alias con="tail -40 -f /var/log/system.log"
    alias socku="startsocks unixadmin.ca"
    alias sockc="startsocks www.cli.ph"
+
+   ql () {
+      /usr/bin/env qlmanage -p "$@" &>/dev/null
+   }
 
    bnchost=unixadmin.ca
 
@@ -220,6 +230,144 @@ if [ $platform == "Darwin" ]; then
       fi
    }
 
+   vpn () {
+      numargs=$#
+      IFS=$'\n'
+   
+      usage () {
+      echo "vpn <VPN keyword|stop> <action: start|stop>"
+      echo "Without any arguments \`vpn\` will display the status of all configured VPNs"
+      echo "With only the action \"stop\", the currently active VPN will be stopped"
+      echo "With a VPN identifying keyword supplied the status of that VPN will be \
+         displayed or the action will be performed on that VPN"
+      }
+
+      vpn_status() {
+         if [ $#  -eq 0 ]; then 
+            for vpn in  `networksetup -listallnetworkservices|grep -v \*|grep VPN`;
+               do
+                  echo -n "${vpn}: "
+                  networksetup -showpppoestatus ${vpn}
+               done
+         else
+            echo -n "$vpn_name: "
+            result=`networksetup -showpppoestatus $vpn_name`
+            echo $result
+            if `echo $result | grep -qv "disconnected"`; then
+               return 0
+            else
+               return 1
+            fi
+         fi 
+      }
+     
+      poll () {
+         loops=0
+         maxloops=200
+
+         echo "Polling ..."
+
+         while vpn_status; do
+            sleep 0.1
+            let loops=$loops+1
+            echo $loops
+            [ $loops -lt $maxloops ] && break
+         done
+
+         [ $loops -le $maxloops ]
+      }
+
+      vpn_start () {
+         if vpn_status $arg >/dev/null; then
+            echo "VPN is already up"
+         else
+            echo -n "Starting $vpn_name ... "
+            # networksetup -connectpppoeservice \"$vpn_name\"
+            # echo networksetup -connectpppoeservice \"$vpn_name\"
+            # vpn_status | grep connected
+            # if poll; then
+            #    echo "Connected"
+            # else
+            #    echo "Did not connect"
+            #    vpn_stop
+            # fi
+/usr/bin/env osascript <<-EOF
+tell application "System Events"
+        tell current location of network preferences
+                set VPN to service "$vpn_name"
+                if exists VPN then connect VPN
+                repeat while (current configuration of VPN is not connected)
+                    delay 1
+                end repeat
+        end tell
+end tell
+EOF
+            vpn_status $vpn_name
+         fi
+      }
+
+      vpn_stop () {
+         if [ $# -eq 1 ]; then
+            vpn_name=$1
+         fi
+
+            echo -n "Stopping $vpn_name ... "
+            # echo networksetup -disconnectpppoeservice \"$vpn_name\"
+            # networksetup -disconnectpppoeservice \"$vpn_name\"
+            # echo scutil --nc stop $vpn_name
+            # scutil --nc stop $vpn_name
+/usr/bin/env osascript <<-EOF
+tell application "System Events"
+        tell current location of network preferences
+                set VPN to service "$vpn_name"
+                if exists VPN then disconnect VPN
+        end tell
+end tell
+return
+EOF
+            vpn_status $vpn_name
+      }
+
+      if [ $# -eq 1 ]; then
+         arg=$1
+         if [ $arg = "stop" ]; then
+            # vpn_status 
+            # vpn_status | grep " connected" | cut -f1 -d\:
+            running_vpn=`vpn_status | grep " connected" | cut -f1 -d\:`
+            # echo $running_vpn
+            if [ -z "$running_vpn" ]; then
+               echo "No active VPN"
+               # echo $running_vpn
+            else
+               vpn_stop $running_vpn
+            fi
+   
+         elif [ $arg = "help" ]; then
+           usage
+            
+         else
+            vpn_name=`networksetup -listallnetworkservices|grep -v \*|grep VPN|grep -i $arg`
+            vpn_status $vpn_name
+         fi
+      elif [ $# -eq 2 ]; then
+         arg=$1
+         action=$2
+         vpn_name=`networksetup -listallnetworkservices|grep -v \*|grep VPN|grep -i $arg`
+         case "$action" in
+               start)
+                  vpn_start
+                  ;;
+               stop)
+                  vpn_stop
+                  ;;
+            esac
+      else
+         vpn_status
+      fi
+
+      # echo $arg
+      # echo $vpn_name
+   }
 
    export PATH=/opt/local/bin:/opt/local/sbin:$PATH
    
