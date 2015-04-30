@@ -139,8 +139,14 @@ if [ $platform == "Darwin" ]; then
             esac
    }
 
+   alias ll="ls -lah"
+   alias con="tail -40 -f /var/log/system.log"
    alias socku="startsocks unixadmin.ca"
    alias sockc="startsocks www.cli.ph"
+
+   ql () {
+      /usr/bin/env qlmanage -p "$@" &>/dev/null
+   }
 
    bnchost=unixadmin.ca
 
@@ -227,7 +233,15 @@ if [ $platform == "Darwin" ]; then
    vpn () {
       numargs=$#
       IFS=$'\n'
-      
+   
+      usage () {
+      echo "vpn <VPN keyword|stop> <action: start|stop>"
+      echo "Without any arguments \`vpn\` will display the status of all configured VPNs"
+      echo "With only the action \"stop\", the currently active VPN will be stopped"
+      echo "With a VPN identifying keyword supplied the status of that VPN will be \
+         displayed or the action will be performed on that VPN"
+      }
+
       vpn_status() {
          if [ $#  -eq 0 ]; then 
             for vpn in  `networksetup -listallnetworkservices|grep -v \*|grep VPN`;
@@ -327,6 +341,9 @@ EOF
             else
                vpn_stop $running_vpn
             fi
+   
+         elif [ $arg = "help" ]; then
+           usage
             
          else
             vpn_name=`networksetup -listallnetworkservices|grep -v \*|grep VPN|grep -i $arg`
