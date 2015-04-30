@@ -139,8 +139,14 @@ if [ $platform == "Darwin" ]; then
             esac
    }
 
+   alias ll="ls -lah"
+   alias con="tail -40 -f /var/log/system.log"
    alias socku="startsocks unixadmin.ca"
    alias sockc="startsocks www.cli.ph"
+
+   ql () {
+      /usr/bin/env qlmanage -p "$@" &>/dev/null
+   }
 
    bnchost=unixadmin.ca
 
@@ -227,9 +233,17 @@ if [ $platform == "Darwin" ]; then
    vpn () {
       numargs=$#
       IFS=$'\n'
-      
+   
+      usage () {
+      echo "vpn <VPN keyword|stop> <action: start|stop>"
+      echo "Without any arguments \`vpn\` will display the status of all configured VPNs"
+      echo "With only the action \"stop\", the currently active VPN will be stopped"
+      echo "With a VPN identifying keyword supplied the status of that VPN will be \
+         displayed or the action will be performed on that VPN"
+      }
+
       vpn_status() {
-         if [ $numargs -eq 0 ]; then 
+         if [ $#  -eq 0 ]; then 
             for vpn in  `networksetup -listallnetworkservices|grep -v \*|grep VPN`;
                do
                   echo -n "${vpn}: "
@@ -267,7 +281,7 @@ if [ $platform == "Darwin" ]; then
          if vpn_status $arg >/dev/null; then
             echo "VPN is already up"
          else
-            echo "Starting $vpn_name ... "
+            echo -n "Starting $vpn_name ... "
             # networksetup -connectpppoeservice \"$vpn_name\"
             # echo networksetup -connectpppoeservice \"$vpn_name\"
             # vpn_status | grep connected
@@ -293,11 +307,15 @@ EOF
       }
 
       vpn_stop () {
-         echo "Stopping $vpn_name ... "
-         # echo networksetup -disconnectpppoeservice \"$vpn_name\"
-         # networksetup -disconnectpppoeservice \"$vpn_name\"
-         # echo scutil --nc stop $vpn_name
-         # scutil --nc stop $vpn_name
+         if [ $# -eq 1 ]; then
+            vpn_name=$1
+         fi
+
+            echo -n "Stopping $vpn_name ... "
+            # echo networksetup -disconnectpppoeservice \"$vpn_name\"
+            # networksetup -disconnectpppoeservice \"$vpn_name\"
+            # echo scutil --nc stop $vpn_name
+            # scutil --nc stop $vpn_name
 /usr/bin/env osascript <<-EOF
 tell application "System Events"
         tell current location of network preferences
@@ -307,13 +325,30 @@ tell application "System Events"
 end tell
 return
 EOF
-         vpn_status $vpn_name
+            vpn_status $vpn_name
       }
 
       if [ $# -eq 1 ]; then
          arg=$1
-         vpn_name=`networksetup -listallnetworkservices|grep -v \*|grep VPN|grep -i $arg`
-         vpn_status $vpn_name
+         if [ $arg = "stop" ]; then
+            # vpn_status 
+            # vpn_status | grep " connected" | cut -f1 -d\:
+            running_vpn=`vpn_status | grep " connected" | cut -f1 -d\:`
+            # echo $running_vpn
+            if [ -z "$running_vpn" ]; then
+               echo "No active VPN"
+               # echo $running_vpn
+            else
+               vpn_stop $running_vpn
+            fi
+   
+         elif [ $arg = "help" ]; then
+           usage
+            
+         else
+            vpn_name=`networksetup -listallnetworkservices|grep -v \*|grep VPN|grep -i $arg`
+            vpn_status $vpn_name
+         fi
       elif [ $# -eq 2 ]; then
          arg=$1
          action=$2
@@ -359,13 +394,3 @@ then
       source $file
    done
 fi
-
-
-##
-# Your previous /Users/cliph/.profile file was backed up as /Users/cliph/.profile.macports-saved_2015-02-23_at_02:16:53
-##
-
-# MacPorts Installer addition on 2015-02-23_at_02:16:53: adding an appropriate PATH variable for use with MacPorts.
-export PATH="/opt/local/bin:/opt/local/sbin:$PATH"
-# Finished adapting your PATH environment variable for use with MacPorts.
-
