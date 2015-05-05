@@ -140,6 +140,8 @@ if [ $platform == "Darwin" ]; then
    }
 
    alias ll="ls -lah"
+   alias less="less -R"
+   alias grep="grep --color=always"
    alias con="tail -40 -f /var/log/system.log"
    alias socku="startsocks unixadmin.ca"
    alias sockc="startsocks www.cli.ph"
