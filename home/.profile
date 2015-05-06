@@ -52,7 +52,7 @@ alias hs="homeshick"
 alias cddot="hs cd dotfiles"
 homeshick --quiet refresh
 
-alias grep='grep --color=auto'
+alias grep='grep --color=always'
 alias more='less'
 alias df='df -h'
 alias du='du -c -h'
@@ -141,7 +141,8 @@ if [ $platform == "Darwin" ]; then
 
    alias ll="ls -lah"
    alias less="less -R"
-   alias grep="grep --color=always"
+   alias bat="pmset -g batt | grep Internal | cut -f2"
+   alias batt="bat"
    alias con="tail -40 -f /var/log/system.log"
    alias socku="startsocks unixadmin.ca"
    alias sockc="startsocks www.cli.ph"
