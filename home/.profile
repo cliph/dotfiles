@@ -54,6 +54,8 @@ homeshick --quiet refresh
 
 alias grep='grep --color=always'
 alias more='less'
+alias less='less -R'
+alias ll="ls -lah"
 alias df='df -h'
 alias du='du -c -h'
 alias mkdir='mkdir -p -v'
@@ -139,8 +141,6 @@ if [ $platform == "Darwin" ]; then
             esac
    }
 
-   alias ll="ls -lah"
-   alias less="less -R"
    alias bat="pmset -g batt | grep Internal | cut -f2"
    alias batt="bat"
    alias con="tail -40 -f /var/log/system.log"
