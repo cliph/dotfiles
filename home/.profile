@@ -390,10 +390,10 @@ elif [ $platform == 'Linux' ]; then
    alias upgrade="sudo apt-get update && sudo apt-get dist-upgrade && sudo apt-get autoremove && sudo apt-get clean"
 fi
 
-if [ -d "$HOME/bin/scripts/clients" ];
-then
-   for file in `find $HOME/bin/scripts/clients -maxdepth 2 -type f | grep -v .swp`
-   do
-      source $file
-   done
-fi
+# if [ -d "$HOME/bin/scripts/clients" ];
+# then
+#    for file in `find $HOME/bin/scripts/clients -maxdepth 2 -type f | grep -v .swp`
+#    do
+#       source $file
+#    done
+# fi
