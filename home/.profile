@@ -55,7 +55,7 @@ homeshick --quiet refresh
 alias grep='grep --color=always'
 alias more='less'
 alias less='less -R'
-alias ll="ls -lah"
+alias ll="ls -lahr"
 alias df='df -h'
 alias du='du -c -h'
 alias mkdir='mkdir -p -v'
@@ -384,6 +384,11 @@ EOF
    alias la='ls -laGF'
 
    alias update="sudo port selfupdate && sudo port upgrade outdated"
+
+   if [ -x "/opt/local/bin/aws-2.7" ];
+   then
+      alias aws='/opt/local/bin/aws-2.7'
+   fi
 
 elif [ $platform == 'Linux' ]; then
    alias ls='ls -GF --color=auto'
