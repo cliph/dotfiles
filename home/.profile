@@ -17,17 +17,11 @@ fi
 alias mu="mosh unixadmin"
 alias mc="mosh cli.ph"
 alias ma="mosh ascii"
-alias mcam="mosh cam"
-alias hammer="ssh hammer"
-# fi
-
-hash pwgen &> /dev/null
-if [ $? -eq 1 ]; then
-   alias genpw="pwgen -cnyB1 10"
-fi
+# alias mcam="mosh cam"
+# alias hammer="ssh hammer"
 
 if [[ "$(hostname)" = *home.cli.ph* ]]; then
-   homehosts=(mini tertimi)
+   homehosts=(mini tertimi dubi pi)
    for host in "${homehosts[@]}"
    do
       alias $host="ssh $host.local"
@@ -37,6 +31,17 @@ else
    do
       alias $host="ssh $host"
    done
+fi
+
+for host in `grep "Host " ~/.ssh/config | egrep -v '\*|\#|\?' | cut -f2 -d' '`
+   do
+      alias $host="ssh $host"
+      alias m$host="mosh $host"
+   done
+
+hash pwgen &> /dev/null
+if [ $? -eq 1 ]; then
+   alias genpw="pwgen -cnyB1 10"
 fi
 
 # alias machine_list="cat ~/.ssh/config | egrep '^Host' | grep -v '\*' | cut -d ' ' -f 2"
