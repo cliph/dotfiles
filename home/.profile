@@ -70,13 +70,11 @@ alias ?='dirs -v'
 
 alias reload='clear; source ~/.profile'
 
-export EDITOR=vim
-
-if [ -n "$BASH_VERSION" ]; then
-    if [ -f "$HOME/.bashrc" ]; then
-        . "$HOME/.bashrc"
-    fi
-fi
+# if [ -n "$BASH_VERSION" ]; then
+#     if [ -f "$HOME/.bashrc" ]; then
+#         . "$HOME/.bashrc"
+#     fi
+# fi
   
 if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
