@@ -416,6 +416,7 @@ reload_motd () {
          sudo cat /etc/motd.art >> /tmp/motd.new;
    fi
    sudo mv /tmp/motd.new /etc/motd
+   cat /etc/motd
 }
 
 # if [ -d "$HOME/bin/scripts/clients" ];
