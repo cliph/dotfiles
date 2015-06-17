@@ -398,6 +398,25 @@ elif [ $platform == 'Linux' ]; then
    alias upgrade="sudo apt-get update && sudo apt-get dist-upgrade && sudo apt-get autoremove && sudo apt-get clean"
 fi
 
+reload_motd () {
+   platform=`uname`
+   case "$platform" in
+      Linux)
+         unamecmd="uname -srv"
+         ;;
+      Darwin)
+         unamecmd="uname -v"
+         ;;
+         esac
+         
+   sudo cp /etc/motd{,.prev}
+   sudo $unamecmd > /etc/motd
+   if [ -f /etc/motd.art ];
+      then
+         cat /etc/motd.art >> /etc/motd;
+   fi
+}
+
 # if [ -d "$HOME/bin/scripts/clients" ];
 # then
 #    for file in `find $HOME/bin/scripts/clients -maxdepth 2 -type f | grep -v .swp`
