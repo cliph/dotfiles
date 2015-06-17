@@ -410,12 +410,12 @@ reload_motd () {
          esac
          
    sudo cp /etc/motd{,.prev}
-   sudo $unamecmd > /etc/motd.new
+   sudo $unamecmd > /tmp/motd.new
    if [ -f /etc/motd.art ];
       then
-         sudo cat /etc/motd.art >> /etc/motd.new;
+         sudo cat /etc/motd.art >> /tmp/motd.new;
    fi
-   sudo mv /etc/motd.new /etc/motd
+   sudo mv /tmp/motd.new /etc/motd
 }
 
 # if [ -d "$HOME/bin/scripts/clients" ];
