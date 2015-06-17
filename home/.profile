@@ -413,7 +413,7 @@ reload_motd () {
    sudo $unamecmd > /etc/motd
    if [ -f /etc/motd.art ];
       then
-         cat /etc/motd.art >> /etc/motd;
+         sudo cat /etc/motd.art >> /etc/motd;
    fi
 }
 
