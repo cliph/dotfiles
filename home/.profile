@@ -387,7 +387,7 @@ EOF
    alias la='ls -laGF'
 
    alias update="sudo port selfupdate && sudo port upgrade outdated"
-
+   alias upgrade="update"
    if [ -x "/opt/local/bin/aws-2.7" ];
    then
       alias aws='/opt/local/bin/aws-2.7'
@@ -395,7 +395,15 @@ EOF
 
 elif [ $platform == 'Linux' ]; then
    alias ls='ls -GF --color=auto'
-   alias upgrade="sudo apt-get update && sudo apt-get dist-upgrade && sudo apt-get autoremove && sudo apt-get clean"
+   distro=`head -1 /etc/issue | cut -f1 -d' '`
+   case "$distro" in
+      Debian)
+         alias upgrade="sudo apt-get update && sudo apt-get dist-upgrade && sudo apt-get autoremove && sudo apt-get clean"
+         ;;
+      CentOS|Redhat)
+         alias upgrade="sudo yum update"
+         ;;
+   esac
 fi
 
 reload_motd () {
