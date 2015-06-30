@@ -1,5 +1,6 @@
 shell -$SHELL
 shelltitle ''
+term screen-256color
 startup_message off
 autodetach on
 hardstatus alwayslastline "%{= dW}%-Lw%{= gW}%50> %n%f* %t %{-}%+Lw%< %= %{= yk} %H %{= dW} %0C %0A %{= gK} %l %{-}"

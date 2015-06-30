@@ -9,6 +9,10 @@ if [ -d ~/Development/scripts/teksavvy/ ]; then
    alias tsq="~/Development/scripts/teksavvy/quota.py"
 fi
 
+if [ -d ~/Development/scripts/gmail-check/ ]; then
+   alias gm="~/Development/scripts/gmail-check/gmcheck.py"
+fi
+
 # alias vl='vim $(!!)'
 
 # hash mosh &> /dev/null
