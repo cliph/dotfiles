@@ -63,7 +63,7 @@ homeshick --quiet refresh
 
 alias grep='grep --color=always'
 alias more='less'
-alias less='less -R'
+alias less='less -R --RAW-CONTROL-CHARS'
 alias ll="ls -lahr"
 alias df='df -h'
 alias du='du -c -h'
@@ -72,7 +72,7 @@ alias +='pushd'
 alias -- -='popd'
 alias ?='dirs -v'
 
-alias reload='hs pull; clear; source ~/.profile'
+alias reload='hs pull; clear; source ~/.bash_profile'
 
 # if [ -n "$BASH_VERSION" ]; then
 #     if [ -f "$HOME/.bashrc" ]; then

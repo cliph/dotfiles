@@ -52,9 +52,20 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 if [ "$color_prompt" = yes ]; then
-    function XCLR () { echo -ne "\[\033[38;5;$1m\]"; }
+    function XCLR () {
+    if [ $2 ]; then
+    #    $bg=$2
+    #  else
+    #     $bg="33"
+    #  fi
+    echo -ne "\033[48;5;"$2"m"
+    echo -ne "\033[38;5;"$1"m"
+    else
+      echo -ne "\[\033[38;5;$1m\]";
+    fi
+ }
     # PS1='${debian_chroot:+($debian_chroot)}\[\033[36m\]\u\[\033[01;00m\]@\[\033[01;32m\]\h\[\033[00m\]:\[\033[01;00m\]\w\[\033[00m\]\[\033[01;33m\]\$\[\033[00m\] '
-    PS1="${debian_chroot:+($debian_chroot)}`XCLR 33`\u\[\033[01;00m\]@\[\033[01;32m\]\h\[\033[00m\]:\[\033[01;00m\]\w\[\033[00m\]\[\033[01;33m\]\$\[\033[00m\] "
+    PS1="${debian_chroot:+($debian_chroot)}`XCLR 33`\u`XCLR 248`@`XCLR 46 236`\h`XCLR 248 0`:`XCLR 254 236`\w\[\033[00m\]`XCLR 226`\$\[\033[00m\] "
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
