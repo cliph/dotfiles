@@ -56,6 +56,7 @@ if [ "$color_prompt" = yes ]; then
     darkgrey="248"
     greybg="236"
     green="46"
+    grey="240"
     red="160"
     yellow="226"
     function XCLR () {
@@ -68,12 +69,55 @@ if [ "$color_prompt" = yes ]; then
          # echo -ne "\[\033[38;5;$1m\]";
          echo -e "\033[38;5;$1m";
        fi
- }
+    }
+
+function _clr {
+    echo "\\[\\e[0m\\]"
+}
+
+function _fg {
+   echo "\\[\\033[38;5;"$1"m\\]"
+}
+
+function _bg {
+   echo "\\[\\033[48;5;"$1"m\\]"
+}
+
+function _lastcommand {
+   if [ $? != 0 ]; then
+      # echo -n $(_fg $green)$?
+      echo -n "yes"
+   else
+      # echo -n $(_fg $red)$?
+      echo -n "no"
+   fi
+}
+
+PS1="\
+$(_fg $blue)\u\
+$(_fg $darkgrey)@\
+$(_fg $green)\h\
+$(_fg $darkgrey):\
+$(_clr)\j\
+$(_fg $darkgrey):\
+$(_clr)\`if [ \$? = 0 ]; 
+then 
+   echo \"\\[\\033[38;5;\"$green\"m\\]•\"; 
+# elif [ \$? = 1 ];
+# then
+#    echo \"\\[\\033[38;5;\"$red\"m\\]•\"
+else
+   echo \"\\[\\033[38;5;\"$red\"m\\]•\"; fi\`\
+$(_fg $darkgrey):\
+$(_clr)\w\
+$(_fg $yellow)\$ $(_clr)"
+
+
  # https://github.com/adamveld12/laughing-hipster/blob/master/.shell_colors
  # https://github.com/lepistone/dotfiles/blob/master/profile.d/prompt.sh
 
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[36m\]\u\[\033[01;00m\]@\[\033[01;32m\]\h\[\033[00m\]:\[\033[01;00m\]\w\[\033[00m\]\[\033[01;33m\]\$\[\033[00m\] '
-    # PS1="${debian_chroot:+($debian_chroot)}`XCLR 33`\u`XCLR 248`@`XCLR 46 236`\h`XCLR 248 0`:`XCLR 254`\j`XCLR 248 0`:`XCLR 254`\`if [ \$? = 0 ]; then echo 0; else echo 1; fi\``XCLR 248 0`:`XCLR 254 0`\w\[\033[00m\]`XCLR 226`\$\[\033[00m\] "
+    # PS1='${debian_chroot:+($debian_chroot)}\[\033[36m\]\u\[\033[01;00m\]@\[\033[01;32m\]\h\[\033[00m\]:\[\033[01;00m\]\w\[\033[00m\]\[\033[01;33m\]\$\[\033[00m\] '
+    # PS1="${debian_chroot:+($debian_chroot)}`XCLR 33`\u`XCLR 248`@`XCLR 46`\h`XCLR 248`:`XCLR 254`\j`XCLR 248`:`XCLR 254`\`if [ \$? = 0 ]; then echo 0; else echo 1; fi\``XCLR 248`:`XCLR 254`\w`XCLR 226`\$`RST` "
     # PS1="${debian_chroot:+($debian_chroot)}`XCLR 33`\u`XCLR 248`@`XCLR 46 236`\h`XCLR 248 0`:`XCLR 254`\j`XCLR 248 0`:`XCLR 254`\`if [ \$? = 0 ]; then XCLR 46 0; echo •; else XCLR 160 0; echo •; fi\``XCLR 248 0`:`XCLR 254 0`\w\[\033[00m\]`XCLR 226`\$\[\033[00m\] "
     # PS1="$(XCLR 33)\u$(XCLR 248)@$(XCLR 46 236)\h$(XCLR 248 0):$(XCLR 254)\j$(XCLR 248 0):$(XCLR 254)\`if [ \$? = 0 ]; then XCLR 46 0; echo •; else XCLR 160 0; echo •; fi\`$(XCLR 248 0):$(XCLR 254 0)\w\[\033[00m\]$(XCLR 226)\$\[\033[00m\] "
     # PS1="\$(XCLR $blue)\u\
