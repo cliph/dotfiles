@@ -90,13 +90,23 @@ function _bg {
    echo "\\[\\033[48;5;"$1"m\\]"
 }
 
-function _lastcommand {
-   if [ $? != 0 ]; then
-      # echo -n $(_fg $green)$?
-      echo -n "yes"
+function _jobs {
+   jjs=`jobs | wc -l`
+   if [ $jjs = 0 ]; then
+      echo "•"
    else
-      # echo -n $(_fg $red)$?
-      echo -n "no"
+      echo $jjs
+   fi
+}
+
+function _lastcmd {
+   ret=$?
+   if [ $ret -eq 0 ]; then
+      echo -en "\033[38;5;"$green"m•";
+   elif [ $ret -eq 1 ]; then
+      echo -en "\033[38;5;"$red"m•";
+   else
+      echo -en "\033[38;5;"$red"m"$ret"";
    fi
 }
 
@@ -105,20 +115,18 @@ $(_fg $user_colour)\u\
 $(_fg $darkgrey)@\
 $(_fg $green)\h\
 $(_fg $darkgrey):\
-$(_clr)\j\
+$(_clr)\$(_lastcmd)\
 $(_fg $darkgrey):\
-$(_clr)\`if [ \$? = 0 ]; 
-then 
-   echo \"\\[\\033[38;5;\"$green\"m\\]•\"; 
-# elif [ \$? = 1 ];
-# then
-#    echo \"\\[\\033[38;5;\"$red\"m\\]•\"
-else
-   echo \"\\[\\033[38;5;\"$red\"m\\]•\"; fi\`\
+$(_clr)\$(_jobs)\
 $(_fg $darkgrey):\
 $(_clr)\w\
 $(_fg $yellow)\\$ $(_clr)"
 
+# $(_clr)\`if [ \$? = 0 ]; 
+# then 
+#    echo \"\\[\\033[38;5;\"$green\"m\\]•\"; 
+# else
+#   echo \"\\[\\033[38;5;\"$red\"m\\]•\"; fi\`\
 
  # https://github.com/adamveld12/laughing-hipster/blob/master/.shell_colors
  # https://github.com/lepistone/dotfiles/blob/master/profile.d/prompt.sh
