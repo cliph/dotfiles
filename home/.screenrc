@@ -1,6 +1,8 @@
 shell -$SHELL
 shelltitle ''
 term screen-256color
+defscrollback 10000
+termcapinfo xterm* ti@:te@
 startup_message off
 autodetach on
-hardstatus alwayslastline "%{= dW}%-Lw%{= gW}%50> %n%f* %t %{-}%+Lw%< %= %{= yk} %H %{= dW} %0C %0A %{= gK} %l %{-}"
+hardstatus alwayslastline "%{= dW}%-Lw%{= gW}%50> %n%f* %t %{-}%+Lw%< %= %{= kg} %H %{= yk} %l %{= gd} %0C %0A %{-}"

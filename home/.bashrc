@@ -52,6 +52,15 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 if [ "$color_prompt" = yes ]; then
+   tblue=$(tput setaf 33)
+   tdarkgrey=$(tput setaf 248)
+   tgreybg=$(tput setab 236)
+   tgreen=$(tput setaf 46)
+   tgrey=$(tput setaf 240)
+   tred=$(tput setaf 160)
+   tyellow=$(tput setaf 226)
+   tpurple=$(tput setaf 200)
+   treset=$(tput sgr0)
     blue="33"
     darkgrey="248"
     greybg="236"
@@ -61,33 +70,24 @@ if [ "$color_prompt" = yes ]; then
     yellow="226"
     purple="200"
     if [ `whoami` = "root" ]; then
-       user_colour=$purple
+       user_colour=$tpurple
     else
-       user_colour=$blue
+       user_colour=$tblue
     fi
-
-    function XCLR () {
-       if [ $2 ]; then
-         echo -ne "\033[48;5;$2m";
-         echo -ne "\033[38;5;$1m";
-       elif [ $1 = 'r' ]; then
-         echo -e "\033[00m";
-       else
-         # echo -ne "\[\033[38;5;$1m\]";
-         echo -e "\033[38;5;$1m";
-       fi
-    }
 
 function _clr {
     echo "\\[\\e[0m\\]"
+    # tput sgr0
 }
 
 function _fg {
-   echo "\\[\\033[38;5;"$1"m\\]"
+   # echo "\\[\\033[38;5;"$1"m\\]"
+   tput setaf $1
 }
 
 function _bg {
    echo "\\[\\033[48;5;"$1"m\\]"
+   # tput setab $1
 }
 
 function _jobs {
@@ -102,25 +102,41 @@ function _jobs {
 function _lastcmd {
    ret=$?
    if [ $ret -eq 0 ]; then
-      echo -en "\033[38;5;"$green"m•";
+      # echo -en "\033[38;5;"$green"m•";
+      echo -en $tgreen"•";
    elif [ $ret -eq 1 ]; then
-      echo -en "\033[38;5;"$red"m•";
+      # echo -en "\033[38;5;"$red"m•";
+      echo -en $tred"•";
    else
-      echo -en "\033[38;5;"$red"m"$ret"";
+      # echo -en "\033[38;5;"$red"m"$ret"";
+      # echo -en "$(_fg $red)$ret";
+      echo -en $tred$ret;
    fi
 }
 
 PS1="\
-$(_fg $user_colour)\u\
-$(_fg $darkgrey)@\
-$(_fg $green)\h\
-$(_fg $darkgrey):\
-$(_clr)\$(_lastcmd)\
-$(_fg $darkgrey):\
-$(_clr)\$(_jobs)\
-$(_fg $darkgrey):\
-$(_clr)\w\
-$(_fg $yellow)\\$ $(_clr)"
+\[$user_colour\]\u\
+\[$tdarkgrey\]@\
+\[$tgreen\]\h\
+\[$tdarkgrey\]:\
+\[$treset\]\[\$(_lastcmd)\]\
+\[$tdarkgrey\]:\
+\[$treset\]\$(_jobs)\
+\[$tdarkgrey\]:\
+\[$treset\]\w\
+\[$tyellow\]\\$ \[$treset\]"
+# PS1="\
+# $(_fg $user_colour)\u\
+# $(_fg $darkgrey)@\
+# $(_fg $green)\h\
+# $(_fg $darkgrey):\
+# $(_clr)\$(_lastcmd)\
+# $(_fg $darkgrey):\
+# $(_clr)\$(_jobs)\
+# $(_fg $darkgrey):\
+# $(_clr)\w\
+# $(_fg $yellow)\\$ $(_clr)"
+
 
 # $(_clr)\`if [ \$? = 0 ]; 
 # then 
