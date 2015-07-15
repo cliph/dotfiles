@@ -110,7 +110,7 @@ else
    echo \"\\[\\033[38;5;\"$red\"m\\]•\"; fi\`\
 $(_fg $darkgrey):\
 $(_clr)\w\
-$(_fg $yellow)\$ $(_clr)"
+$(_fg $yellow)\\$ $(_clr)"
 
 
  # https://github.com/adamveld12/laughing-hipster/blob/master/.shell_colors
