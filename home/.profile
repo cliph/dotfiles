@@ -24,6 +24,8 @@ alias ma="mosh ascii"
 # alias mcam="mosh cam"
 # alias hammer="ssh hammer"
 
+alias root="sudo -Es bash -l"
+
 if [[ "$(hostname)" = *home.cli.ph* ]]; then
    homehosts=(mini tertimi dubi pi)
    for host in "${homehosts[@]}"

@@ -59,6 +59,13 @@ if [ "$color_prompt" = yes ]; then
     grey="240"
     red="160"
     yellow="226"
+    purple="200"
+    if [ `whoami` = "root" ]; then
+       user_colour=$purple
+    else
+       user_colour=$blue
+    fi
+
     function XCLR () {
        if [ $2 ]; then
          echo -ne "\033[48;5;$2m";
@@ -94,7 +101,7 @@ function _lastcommand {
 }
 
 PS1="\
-$(_fg $blue)\u\
+$(_fg $user_colour)\u\
 $(_fg $darkgrey)@\
 $(_fg $green)\h\
 $(_fg $darkgrey):\
