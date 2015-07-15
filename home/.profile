@@ -72,7 +72,7 @@ alias +='pushd'
 alias -- -='popd'
 alias ?='dirs -v'
 
-alias reload='hs pull; clear; source ~/.bash_profile'
+alias reload='hs pull; clear; sleep 2; source ~/.bash_profile'
 
 # if [ -n "$BASH_VERSION" ]; then
 #     if [ -f "$HOME/.bashrc" ]; then
