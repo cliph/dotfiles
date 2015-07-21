@@ -27,7 +27,7 @@ alias ma="mosh ascii"
 alias root="sudo -Es bash -l"
 
 if [[ "$(hostname)" = *home.cli.ph* ]]; then
-   homehosts=(mini tertimi dubi pi)
+   homehosts=(mini tertimi dubh pi)
    for host in "${homehosts[@]}"
    do
       alias $host="ssh $host.local"
@@ -66,7 +66,7 @@ homeshick --quiet refresh
 alias grep='grep --color=always'
 alias more='less'
 alias less='less -R --RAW-CONTROL-CHARS'
-alias ll="ls -lahr"
+alias ll="ls -lathr"
 alias df='df -h'
 alias du='du -c -h'
 alias mkdir='mkdir -p -v'
@@ -112,6 +112,7 @@ if [ $platform == "Darwin" ]; then
                # return 1
             fi
          done
+         # return 1
       }
 
    stopsocks () 

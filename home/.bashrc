@@ -52,6 +52,8 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 if [ "$color_prompt" = yes ]; then
+   dot="•"
+   bul="\342\200\242"
    tblue=$(tput setaf 33)
    tdarkgrey=$(tput setaf 248)
    tgreybg=$(tput setab 236)
@@ -61,6 +63,9 @@ if [ "$color_prompt" = yes ]; then
    tyellow=$(tput setaf 226)
    tpurple=$(tput setaf 200)
    treset=$(tput sgr0)
+   # tdot=$(tput sc; echo $dot; tput rc)
+   tdot=$(tput sc; echo -n "\ \ "; tput rc; echo $dot)
+   # tdot=$(echo $dot)
     blue="33"
     darkgrey="248"
     greybg="236"
@@ -74,6 +79,13 @@ if [ "$color_prompt" = yes ]; then
     else
        user_colour=$tblue
     fi
+
+# function _dot {
+#    tedot="\[`tput sc`\]  \[`tput rc`\]\[$dot\] "
+#    echo $tdot
+# }
+# 
+# tdot=$(_dot)
 
 function _clr {
     echo "\\[\\e[0m\\]"
@@ -91,9 +103,9 @@ function _bg {
 }
 
 function _jobs {
-   jjs=`jobs | wc -l`
+   jjs=`jobs | wc -l | awk '{print \$1}'`
    if [ $jjs = 0 ]; then
-      echo "•"
+      echo $tdot
    else
       echo $jjs
    fi
@@ -103,28 +115,38 @@ function _lastcmd {
    ret=$?
    if [ $ret -eq 0 ]; then
       # echo -en "\033[38;5;"$green"m•";
-      echo -en $tgreen"•";
+      echo -en $tgreen$tdot;
    elif [ $ret -eq 1 ]; then
       # echo -en "\033[38;5;"$red"m•";
-      echo -en $tred"•";
+      echo -en $tred$tdot;
    else
       # echo -en "\033[38;5;"$red"m"$ret"";
       # echo -en "$(_fg $red)$ret";
-      echo -en $tred$ret;
+      # echo -en $tred$ret;
+      echo -en $tred$tdot;
    fi
 }
 
+# PS1="\
+# \[$user_colour\]\u\
+# \[$tdarkgrey\]@\
+# \[$tgreen\]\h\
+# \[$tdarkgrey\]:\
+# \[$treset\]\[\$(_lastcmd)\]\
+# \[$tdarkgrey\]:\
+# \[$treset\]\[\$(_jobs)\]\
+# \[$tdarkgrey\]:\
+# \[$treset\]\w\
+# \[$tyellow\]\\$ \[$treset\]"
+# Shorter ps1
 PS1="\
 \[$user_colour\]\u\
 \[$tdarkgrey\]@\
 \[$tgreen\]\h\
 \[$tdarkgrey\]:\
-\[$treset\]\[\$(_lastcmd)\]\
-\[$tdarkgrey\]:\
-\[$treset\]\$(_jobs)\
-\[$tdarkgrey\]:\
 \[$treset\]\w\
 \[$tyellow\]\\$ \[$treset\]"
+#
 # PS1="\
 # $(_fg $user_colour)\u\
 # $(_fg $darkgrey)@\
