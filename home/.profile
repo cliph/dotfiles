@@ -50,14 +50,6 @@ if [ $? -eq 1 ]; then
    alias genpw="pwgen -cnyB1 10"
 fi
 
-# alias machine_list="cat ~/.ssh/config | egrep '^Host' | grep -v '\*' | cut -d ' ' -f 2"
-# 
-# for machine in `machine_list`
-# do
-#    alias $machine="ssh $machine"
-#    alias m$machine="mosh $machine"
-# done
-  
 source $HOME/.homesick/repos/homeshick/homeshick.sh
 alias hs="homeshick"
 alias cddot="hs cd dotfiles"
@@ -417,15 +409,15 @@ reload_motd () {
    platform=`uname`
    case "$platform" in
       Linux)
-         unamecmd="uname -srv"
+         unamecmd=$(name -srv)
          ;;
       Darwin)
-         unamecmd="uname -v"
+         unamecmd=$(build=`sw_vers -buildVersion`; uname=`uname -vm | sed -E 's/Kernel\ Version\ //g;s/\/RELEASE.{7}//g'`; echo $uname $build)
          ;;
          esac
          
    sudo cp /etc/motd{,.prev}
-   sudo $unamecmd > /tmp/motd.new
+   sudo echo $unamecmd > /tmp/motd.new
    if [ -f /etc/motd.art ];
       then
          sudo cat /etc/motd.art >> /tmp/motd.new;
@@ -434,10 +426,13 @@ reload_motd () {
    cat /etc/motd
 }
 
-# if [ -d "$HOME/bin/scripts/clients" ];
+# echo $run_client_scripts
+# 
+# if [ -d "$HOME/bin/scripts/clients" ] && [ "$run_client_scripts" = "0" ];
 # then
-#    for file in `find $HOME/bin/scripts/clients -maxdepth 2 -type f | grep -v .swp`
-#    do
-#       source $file
-#    done
-# fi
+#     echo "Loading client scripts ..."
+#     for file in `find $HOME/bin/scripts/clients -maxdepth 2 -type f -name *.sh`
+#     do
+#        source $file
+#     done
+#  fi

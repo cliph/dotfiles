@@ -12,6 +12,8 @@ export HISTCONTROL=$HISTCONTROL${HISTCONTROL+,}ignoredups
 export HISTCONTROL=ignoreboth
 export HISTSIZE=1000000
 
+export run_client_scripts=1
+
 if [ ${BASH_VERSINFO} -ge 4 ];
 then
    shopt -s autocd
