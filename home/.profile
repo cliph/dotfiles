@@ -143,7 +143,7 @@ if [ $platform == "Darwin" ]; then
             esac
    }
 
-   alias bat="pmset -g batt | grep Internal | cut -f2"
+   alias bat="pmset -g batt | grep Internal | cut -f2 | sed s/\;\ 0\:00.*//g"
    alias batt="bat"
    alias con="tail -40 -f /var/log/system.log"
    alias socku="startsocks unixadmin.ca"
