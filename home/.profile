@@ -412,7 +412,7 @@ reload_motd () {
          unamecmd=$(uname -srv)
          ;;
       Darwin)
-         unamecmd=$(build=`sw_vers -buildVersion`; uname=`uname -vm | sed -E 's/Kernel\ Version\ //g;s/\/RELEASE.{7}//g;s/\://g;s/\;//g'`; echo $uname $build)
+         unamecmd=$(build=`sw_vers -buildVersion`; uname=`uname -vm | sed -E 's/Kernel\ Version\ //g;s/\/RELEASE.{7}//g;s/\:\ /\ /g;s/\;//g'`; echo $uname $build)
          ;;
          esac
          
