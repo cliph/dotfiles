@@ -7,7 +7,7 @@
 
 # don't put duplicate lines in the history. See bash(1) for more options
 # don't overwrite GNU Midnight Commander's setting of `ignorespace'.
-export HISTCONTROL=$HISTCONTROL${HISTCONTROL+,}ignoredups
+# export HISTCONTROL=$HISTCONTROL${HISTCONTROL+,}ignoredups
 # ... or force ignoredups and ignorespace
 export HISTCONTROL=ignoreboth
 export HISTSIZE=1000000
@@ -235,5 +235,5 @@ if [ -f /etc/bash_completion ]; then
 fi
 
 # export PROMPT_COMMAND='echo -ne "\033]0;${PWD##*/}\007"'
-export PROMPT_COMMAND='history -a'
+export PROMPT_COMMAND="history -a;$PROMPT_COMMAND"
 export EDITOR=vim
