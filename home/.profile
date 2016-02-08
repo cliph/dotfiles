@@ -146,7 +146,7 @@ if [ $platform == "Darwin" ]; then
    alias bat="pmset -g batt | grep Internal | cut -f2 | sed s/\;\ 0\:00.*//g"
    alias batt="bat"
    alias con="tail -40 -f /var/log/system.log"
-   alias socku="startsocks unixadmin.ca"
+   alias socku="startsocks l.unixadmin.ca"
    alias sockc="startsocks www.cli.ph"
 
    ql () {
