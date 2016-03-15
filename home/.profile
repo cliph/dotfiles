@@ -6,7 +6,17 @@ if [ -d ~/Development/transmission-remote-cli/ ]; then
 fi
 
 if [ -d ~/Development/scripts/teksavvy/ ]; then
-   alias tsq="~/Development/scripts/teksavvy/quota.py"
+   # alias tsq="~/Development/scripts/teksavvy/quota.py"
+   tsqcache=~/.teksavvy-quota
+   function tsq {
+      if [ -f $tsqcache ]
+      then
+         cat $tsqcache
+      else
+         ~/Development/scripts/teksavvy/quota.py -dup > $tsqcache && tsq
+      fi
+   }
+   alias tsb=~/Development/scripts/teksavvy/tsq-bar.sh
 fi
 
 if [ -d ~/Development/scripts/gmail-check/ ]; then
@@ -154,7 +164,7 @@ if [ $platform == "Darwin" ]; then
       /usr/bin/env qlmanage -p "$@" &>/dev/null
    }
 
-   bnchost=unixadmin.ca
+   bnchost=l.unixadmin.ca
 
    tunnel ()
    {
