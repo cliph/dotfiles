@@ -110,7 +110,7 @@ if [ $platform == "Darwin" ]; then
    stopsocks () 
    {
    pkill -f "ssh -D"
-   sudo networksetup -setsocksfirewallproxystate Ethernet off
+   sudo networksetup -setsocksfirewallproxystate Wi-Fi off
    }
 
    startsocks ()
@@ -137,8 +137,8 @@ if [ $platform == "Darwin" ]; then
             return 1
             ;;
          y|Y|*)
-            sudo networksetup -setsocksfirewallproxy Ethernet localhost $port
-            sudo networksetup -setsocksfirewallproxystate Ethernet on
+            sudo networksetup -setsocksfirewallproxy Wi-Fi localhost $port
+            sudo networksetup -setsocksfirewallproxystate Wi-Fi on
             ;;
             esac
    }
