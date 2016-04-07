@@ -6,12 +6,28 @@ if [ -d ~/Development/transmission-remote-cli/ ]; then
 fi
 
 if [ -d ~/Development/scripts/teksavvy/ ]; then
-   alias tsq="~/Development/scripts/teksavvy/quota.py"
+   # alias tsq="~/Development/scripts/teksavvy/quota.py"
+   tsqcache=~/.teksavvy-quota
+   function tsq {
+      if [ -f $tsqcache ]
+      then
+         cat $tsqcache
+      else
+         # ~/Development/scripts/teksavvy/quota.py -dup > $tsqcache && tsq
+         ~/Development/scripts/teksavvy/nightly-tsq.sh && tsq
+      fi
+   }
+   alias tsb=~/Development/scripts/teksavvy/tsq-bar.sh
 fi
 
 if [ -d ~/Development/scripts/gmail-check/ ]; then
    alias gm="~/Development/scripts/gmail-check/gmcheck.py"
 fi
+
+if [ -d ~/Development/weather/ ]; then
+   alias weather="pushd `pwd` > /dev/null && cd ~/Development/weather/ && ./weather -m cytz; popd > /dev/null"
+fi
+
 
 # alias vl='vim $(!!)'
 
@@ -145,15 +161,16 @@ if [ $platform == "Darwin" ]; then
 
    alias bat="pmset -g batt | grep Internal | cut -f2 | sed s/\;\ 0\:00.*//g"
    alias batt="bat"
+   alias free="echo -n 'Memory free: ' && memory_pressure |tail -1|cut -d' ' -f5"
    alias con="tail -40 -f /var/log/system.log"
-   alias socku="startsocks unixadmin.ca"
+   alias socku="startsocks l.unixadmin.ca"
    alias sockc="startsocks www.cli.ph"
 
    ql () {
       /usr/bin/env qlmanage -p "$@" &>/dev/null
    }
 
-   bnchost=unixadmin.ca
+   bnchost=l.unixadmin.ca
 
    tunnel ()
    {
@@ -385,7 +402,7 @@ EOF
    alias l='ls -lGF'
    alias la='ls -laGF'
 
-   alias update="sudo port selfupdate && sudo port upgrade outdated"
+   alias update="sudo port selfupdate && sudo port upgrade outdated && reload_motd"
    alias upgrade="update"
    if [ -x "/opt/local/bin/aws-2.7" ];
    then
