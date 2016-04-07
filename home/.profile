@@ -13,7 +13,8 @@ if [ -d ~/Development/scripts/teksavvy/ ]; then
       then
          cat $tsqcache
       else
-         ~/Development/scripts/teksavvy/quota.py -dup > $tsqcache && tsq
+         # ~/Development/scripts/teksavvy/quota.py -dup > $tsqcache && tsq
+         ~/Development/scripts/teksavvy/nightly-tsq.sh && tsq
       fi
    }
    alias tsb=~/Development/scripts/teksavvy/tsq-bar.sh
@@ -22,6 +23,11 @@ fi
 if [ -d ~/Development/scripts/gmail-check/ ]; then
    alias gm="~/Development/scripts/gmail-check/gmcheck.py"
 fi
+
+if [ -d ~/Development/weather/ ]; then
+   alias weather="pushd `pwd` > /dev/null && cd ~/Development/weather/ && ./weather -m cytz; popd > /dev/null"
+fi
+
 
 # alias vl='vim $(!!)'
 
@@ -396,7 +402,7 @@ EOF
    alias l='ls -lGF'
    alias la='ls -laGF'
 
-   alias update="sudo port selfupdate && sudo port upgrade outdated"
+   alias update="sudo port selfupdate && sudo port upgrade outdated && reload_motd"
    alias upgrade="update"
    if [ -x "/opt/local/bin/aws-2.7" ];
    then
