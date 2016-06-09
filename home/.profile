@@ -89,7 +89,11 @@ alias reload='hs pull; clear; sleep 2; source ~/.bash_profile'
 #         . "$HOME/.bashrc"
 #     fi
 # fi
-  
+ 
+if [ -d "$HOME/Development/scripts" ] ; then
+    PATH="$HOME/Development/scripts:$PATH"
+fi
+
 if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
 fi
