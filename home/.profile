@@ -133,6 +133,22 @@ if [ $platform == "Darwin" ]; then
    sudo networksetup -setsocksfirewallproxystate Wi-Fi off
    }
 
+   # if [ -d /opt/local/bin/nmap ]; then
+      scanlocal () {
+
+         localip=`ipconfig getifaddr en0`
+         localnet=$(echo ${localip}|cut -d. -f1,2,3)
+
+         # echo $localip
+         # echo $localnet
+
+         # echo nmap -sn -sV $localnet.0/24
+         echo "Scanning $localnet.0/24 ... "
+         nmap -sn $localnet.0/24
+         # --version-light 
+      } 
+   # fi
+
    startsocks ()
    {
       if [ $# -lt 1 ];
