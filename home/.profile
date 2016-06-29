@@ -422,11 +422,34 @@ EOF
    alias l='ls -lGF'
    alias la='ls -laGF'
 
-   alias update="sudo port selfupdate && sudo port upgrade outdated && reload_motd"
+   alias update="sudo port selfupdate && sudo port upgrade outdated && sudo port uninstall inactive && reload_motd"
    alias upgrade="update"
    if [ -x "/opt/local/bin/aws-2.7" ];
    then
       alias aws='/opt/local/bin/aws-2.7'
+   fi
+
+   if [ -e ~/Synervoz/AWS/source_creds ];
+   then
+      alias syner='aws_creds Synervoz'
+   fi
+
+   if [ -e ~/Mobiroo/AWS/source_creds ];
+   then
+      alias mobi='aws_creds Mobiroo'
+   fi
+
+   aws_creds() {
+      client=$1
+      echo -n "Exporting $client AWS credentials ..."
+      source ~/$client/AWS/source_creds
+      echo "Done."
+   }
+
+
+   if [ -x "$HOME/Library/Python/2.7/bin" ];
+   then
+      export PATH=$HOME/Library/Python/2.7/bin:$PATH
    fi
 
 elif [ $platform == 'Linux' ]; then
