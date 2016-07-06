@@ -439,9 +439,12 @@ EOF
       alias mobi='aws_creds Mobiroo'
    fi
 
+   alias syn='cd ~/Synervoz && syner'
+   alias mob='cd ~/Mobiroo && mobi'
+
    aws_creds() {
       client=$1
-      echo -n "Exporting $client AWS credentials ..."
+      echo -n "Exporting $client AWS credentials ... "
       source ~/$client/AWS/source_creds
       echo "Done."
    }
