@@ -135,8 +135,13 @@ if [ $platform == "Darwin" ]; then
 
    # if [ -d /opt/local/bin/nmap ]; then
       scanlocal () {
-
-         localip=`ipconfig getifaddr en0`
+         if [ $# -eq 0 ]
+         then
+            if=en0
+         else
+            if=$1
+         fi
+         localip=`ipconfig getifaddr $if`
          localnet=$(echo ${localip}|cut -d. -f1,2,3)
 
          # echo $localip
