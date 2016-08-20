@@ -37,6 +37,7 @@ fi
 alias mu="mosh unixadmin"
 alias mc="mosh cli.ph"
 alias ma="mosh ascii"
+alias mcdn="mosh unixadmin mosh ec2-52-192-238-158.ap-northeast-1.compute.amazonaws.com"
 # alias mcam="mosh cam"
 # alias hammer="ssh hammer"
 
@@ -131,6 +132,7 @@ if [ $platform == "Darwin" ]; then
    {
    pkill -f "ssh -D"
    sudo networksetup -setsocksfirewallproxystate Wi-Fi off
+   sudo networksetup -setsocksfirewallproxystate Ethernet off
    }
 
    # if [ -d /opt/local/bin/nmap ]; then
@@ -179,7 +181,9 @@ if [ $platform == "Darwin" ]; then
             ;;
          y|Y|*)
             sudo networksetup -setsocksfirewallproxy Wi-Fi localhost $port
+            sudo networksetup -setsocksfirewallproxy Ethernet localhost $port
             sudo networksetup -setsocksfirewallproxystate Wi-Fi on
+            sudo networksetup -setsocksfirewallproxystate Ethernet on
             ;;
             esac
    }
@@ -448,10 +452,22 @@ EOF
    alias mob='cd ~/Mobiroo && mobi'
 
    aws_creds() {
-      client=$1
-      echo -n "Exporting $client AWS credentials ... "
-      source ~/$client/AWS/source_creds
-      echo "Done."
+      if [ $# -lt 1 ];
+      then
+         echo "$FUNCNAME requires an argument"
+         return 1
+      else
+         client=$1
+         if [ -d ~/$client/AWS/ ];
+         then
+            echo -n "Exporting $client AWS credentials ... "
+            source ~/$client/AWS/source_creds
+            echo "Done."
+         else
+            echo "AWS directory not found in ~/$client/"
+            return 1
+         fi 
+      fi
    }
 
 
