@@ -188,7 +188,7 @@ if [ $platform == "Darwin" ]; then
             esac
    }
 
-   alias bat="pmset -g batt | grep Internal | cut -f2 | sed s/\;\ 0\:00.*//g"
+   alias bat="pmset -g batt | grep Internal | cut -f2 | cut -d' ' -f1,2,3,4| sed s/\;\ 0\:00.*//g"
    alias batt="bat"
    alias free="echo -n 'Memory free: ' && memory_pressure |tail -1|cut -d' ' -f5"
    alias con="tail -40 -f /var/log/system.log"
