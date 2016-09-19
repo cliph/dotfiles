@@ -194,6 +194,7 @@ if [ $platform == "Darwin" ]; then
    alias con="tail -40 -f /var/log/system.log"
    alias socku="startsocks l.unixadmin.ca"
    alias sockc="startsocks www.cli.ph"
+   alias o="open ."
 
    ql () {
       /usr/bin/env qlmanage -p "$@" &>/dev/null
