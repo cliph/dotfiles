@@ -481,7 +481,7 @@ elif [ $platform == 'Linux' ]; then
    alias ls='ls -GF --color=auto'
    distro=`head -1 /etc/issue | cut -f1 -d' '`
    case "$distro" in
-      Debian)
+      Debian|Ubuntu)
          alias upgrade="sudo apt-get update && sudo apt-get dist-upgrade && sudo apt-get autoremove && sudo apt-get clean"
          ;;
       CentOS|Redhat)
