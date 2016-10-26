@@ -42,7 +42,7 @@ alias mcdn="mosh unixadmin mosh ec2-52-192-238-158.ap-northeast-1.compute.amazon
 # alias hammer="ssh hammer"
 
 alias agent="eval `ssh-agent`\
-   ssh-add"
+   sleep 5 && ssh-add"
 
 alias root="sudo -Es bash -l"
 
