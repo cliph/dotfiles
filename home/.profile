@@ -44,6 +44,7 @@ alias mcdn="mosh unixadmin mosh ec2-52-192-238-158.ap-northeast-1.compute.amazon
 # alias agent="eval `ssh-agent`\
 #    sleep 5 && ssh-add"
 
+alias whatismyip="wget http://ipinfo.io/ip -qO -"
 alias root="sudo -Es bash -l"
 
 if [[ "$(hostname)" = *home.cli.ph* ]]; then
@@ -485,6 +486,7 @@ elif [ $platform == 'Linux' ]; then
    distro=`head -1 /etc/issue | cut -f1 -d' '`
    case "$distro" in
       Debian|Ubuntu)
+         alias apt-get="sudo apt-get"
          alias upgrade="sudo apt-get update && sudo apt-get dist-upgrade && sudo apt-get autoremove && sudo apt-get clean"
          ;;
       CentOS|Redhat)
