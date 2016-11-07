@@ -196,6 +196,7 @@ if [ $platform == "Darwin" ]; then
    alias batt="bat"
    alias free="echo -n 'Memory free: ' && memory_pressure |tail -1|cut -d' ' -f5"
    alias con="tail -40 -f /var/log/system.log"
+   alias airport="/System/Library/PrivateFrameworks/Apple80211.framework/Versions/A/Resources/airport"
    alias socku="startsocks l.unixadmin.ca"
    alias sockc="startsocks www.cli.ph"
    alias o="open ."
