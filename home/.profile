@@ -28,6 +28,10 @@ if [ -d ~/Development/weather/ ]; then
    alias weather="pushd `pwd` > /dev/null && cd ~/Development/weather/ && ./weather -m cytz; popd > /dev/null"
 fi
 
+if [ -x ~/Development/scripts/rustplayers ]; then
+   alias wr="watch -c -d -n300 'rustplayers'"
+fi
+
 
 # alias vl='vim $(!!)'
 
