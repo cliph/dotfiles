@@ -24,8 +24,12 @@ if [ -d ~/Development/scripts/gmail-check/ ]; then
    alias gm="~/Development/scripts/gmail-check/gmcheck.py"
 fi
 
+
 if [ -d ~/Development/weather/ ]; then
-   alias weather="pushd `pwd` > /dev/null && cd ~/Development/weather/ && ./weather -m cytz; popd > /dev/null"
+   # alias weather="pushd `pwd` > /dev/null && cd ~/Development/weather/ && ./weather -m cytz; popd > /dev/null"
+   wd="~/Development/weather/"
+   alias weather="$wd/weather --setpath=$wd -m cytz"
+   unset wd
 fi
 
 if [ -x ~/Development/scripts/rustplayers ]; then
@@ -441,7 +445,7 @@ EOF
    alias l='ls -lGF'
    alias la='ls -laGF'
 
-   alias update="sudo port selfupdate && sudo port upgrade outdated && sudo port uninstall inactive && reload_motd"
+   alias update="reload_motd; sudo port selfupdate && sudo port upgrade outdated && sudo port uninstall inactive"
    alias upgrade="update"
    if [ -x "/opt/local/bin/aws-2.7" ];
    then
