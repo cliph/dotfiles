@@ -208,6 +208,7 @@ if [ $platform == "Darwin" ]; then
    alias socku="startsocks l.unixadmin.ca"
    alias sockc="startsocks www.cli.ph"
    alias o="open ."
+   alias vlc="open -a vlc"
 
    ql () {
       /usr/bin/env qlmanage -p "$@" &>/dev/null
