@@ -50,7 +50,7 @@ alias mcdn="mosh unixadmin mosh ec2-52-192-238-158.ap-northeast-1.compute.amazon
 # alias hammer="ssh hammer"
 
 # alias agent="eval `ssh-agent`\
-#    sleep 5 && ssh-add"
+#   sleep 5 && ssh-add"
 
 alias whatismyip="wget http://ipinfo.io/ip -qO -"
 alias root="sudo -Es bash -l"
@@ -490,6 +490,29 @@ EOF
    then
       export PATH=$HOME/Library/Python/2.7/bin:$PATH
    fi
+
+#	SSH_ENV="$HOME/.ssh/environment"
+#
+#	function start_agent {
+#		  echo "Initialising new SSH agent..."
+#		  /usr/bin/ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
+#		  echo succeeded
+#		  chmod 600 "${SSH_ENV}"
+#		  . "${SSH_ENV}" > /dev/null
+#		  /usr/bin/ssh-add;
+#	}
+#
+#	# Source SSH settings, if applicable
+#
+#	if [ -f "${SSH_ENV}" ]; then
+#		  . "${SSH_ENV}" > /dev/null
+#		  #ps ${SSH_AGENT_PID} doesn't work under cywgin
+#		  ps -ef | grep ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
+#				start_agent;
+#		  }
+#	else
+#		  start_agent;
+#	fi
 
 elif [ $platform == 'Linux' ]; then
    alias ls='ls -GF --color=auto'
