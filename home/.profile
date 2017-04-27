@@ -82,7 +82,7 @@ fi
 source $HOME/.homesick/repos/homeshick/homeshick.sh
 alias hs="homeshick"
 alias cddot="hs cd dotfiles"
-homeshick --quiet refresh
+homeshick --quiet refresh 30
 
 alias grep='grep --color=always'
 alias more='less'
