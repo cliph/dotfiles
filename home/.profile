@@ -119,6 +119,7 @@ if [ $platform == "Darwin" ]; then
          # Move files from a given extension from a given location to another given location
          base=~/
          srcs=(Downloads Desktop)
+         src2=/Volumes/${srcs[0]}
          dst=.t????n?s
          ext=t*n*t
          IFS=$(echo -en "\n\b")
@@ -137,6 +138,9 @@ if [ $platform == "Darwin" ]; then
                # return 1
             fi
          done
+         # echo mv -v ${src2}/*.$ext
+         # echo $src2
+         # echo ${src2}
          # return 1
       }
 
