@@ -1,8 +1,10 @@
 # Aliases
-if [ -d ~/Development/transmission-remote-cli/ ]; then
-   alias btcli="~/Development/transmission-remote-cli/transmission-remote-cli"
+# if [ -d ~/Development/transmission-remote-cli/ ]; then
+if [ -d ~/Development/tremc/ ]; then
+   alias btcli="~/Development/tremc/tremc"
+   # alias btcli="~/Development/transmission-remote-cli/transmission-remote-cli"
    # alias bt="btcli"
-   alias bt="mvt & btcli"
+   alias bt="mvt & btcli && tsq"
 fi
 
 if [ -d ~/Development/scripts/teksavvy/ ]; then
@@ -23,6 +25,11 @@ fi
 if [ -d ~/Development/scripts/gmail-check/ ]; then
    alias gm="~/Development/scripts/gmail-check/gmcheck.py"
 fi
+
+if [ -d ~/bin/toggleres.app/ ]; then
+   alias toggleres="open ~/bin/toggleres.app"
+fi
+
 
 
 if [ -d ~/Development/weather/ ]; then
@@ -50,7 +57,7 @@ alias mcdn="mosh unixadmin mosh ec2-52-192-238-158.ap-northeast-1.compute.amazon
 # alias hammer="ssh hammer"
 
 # alias agent="eval `ssh-agent`\
-#    sleep 5 && ssh-add"
+#   sleep 5 && ssh-add"
 
 alias whatismyip="wget http://ipinfo.io/ip -qO -"
 alias root="sudo -Es bash -l"
@@ -82,7 +89,7 @@ fi
 source $HOME/.homesick/repos/homeshick/homeshick.sh
 alias hs="homeshick"
 alias cddot="hs cd dotfiles"
-homeshick --quiet refresh
+homeshick --quiet refresh 30
 
 alias grep='grep --color=always'
 alias more='less'
@@ -119,24 +126,31 @@ if [ $platform == "Darwin" ]; then
          # Move files from a given extension from a given location to another given location
          base=~/
          srcs=(Downloads Desktop)
+         src2=/Volumes/${srcs[0]}
          dst=.t????n?s
          ext=t*n*t
          IFS=$(echo -en "\n\b")
          shopt -s nullglob
-         for src in ${srcs[@]}; do
-            if [ ! -z "`echo $base${src}/*.$ext`" ];
-            then
-               for file in $base${src}/*.$ext
-               do
-                  echo "Moving `basename "$file"` ..."
-                  mv "$file" $base$dst/
-               done
-               echo "Done."
-            else
-               echo "No ${ext}s in $base${src}."
-               # return 1
-            fi
-         done
+         # for src in ${srcs[@]}; do
+         #    if [ ! -z "`echo $base${src}/*.$ext`" ];
+         #    then
+         #       for file in $base${src}/*.$ext
+         #      do
+         #          echo "Moving `basename "$file"` ..."
+         #          mv "$file" $base$dst/
+         #       done
+         #       echo "Done."
+         #    else
+         #       echo "No ${ext}s in $base${src}."
+         #       # return 1
+         #   fi
+         #i done
+         # if [ -e ${src2}/*.$ext ];
+         # then
+             mv -v ${src2}/*.$ext $base$dst/
+         # fi
+         # echo $src2
+         # echo ${src2}
          # return 1
       }
 
@@ -208,7 +222,12 @@ if [ $platform == "Darwin" ]; then
    alias socku="startsocks l.unixadmin.ca"
    alias sockc="startsocks www.cli.ph"
    alias o="open ."
+   alias vlc="open -a vlc"
 
+   dict () {
+      open dict://$1
+   }
+   
    ql () {
       /usr/bin/env qlmanage -p "$@" &>/dev/null
    }
@@ -489,6 +508,29 @@ EOF
    then
       export PATH=$HOME/Library/Python/2.7/bin:$PATH
    fi
+
+#	SSH_ENV="$HOME/.ssh/environment"
+#
+#	function start_agent {
+#		  echo "Initialising new SSH agent..."
+#		  /usr/bin/ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
+#		  echo succeeded
+#		  chmod 600 "${SSH_ENV}"
+#		  . "${SSH_ENV}" > /dev/null
+#		  /usr/bin/ssh-add;
+#	}
+#
+#	# Source SSH settings, if applicable
+#
+#	if [ -f "${SSH_ENV}" ]; then
+#		  . "${SSH_ENV}" > /dev/null
+#		  #ps ${SSH_AGENT_PID} doesn't work under cywgin
+#		  ps -ef | grep ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
+#				start_agent;
+#		  }
+#	else
+#		  start_agent;
+#	fi
 
 elif [ $platform == 'Linux' ]; then
    alias ls='ls -GF --color=auto'
