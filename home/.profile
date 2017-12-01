@@ -1,8 +1,10 @@
 # Aliases
-if [ -d ~/Development/transmission-remote-cli/ ]; then
-   alias btcli="~/Development/transmission-remote-cli/transmission-remote-cli"
+# if [ -d ~/Development/transmission-remote-cli/ ]; then
+if [ -d ~/Development/tremc/ ]; then
+   alias btcli="~/Development/tremc/tremc"
+   # alias btcli="~/Development/transmission-remote-cli/transmission-remote-cli"
    # alias bt="btcli"
-   alias bt="mvt & btcli"
+   alias bt="mvt & btcli && tsq"
 fi
 
 if [ -d ~/Development/scripts/teksavvy/ ]; then
@@ -23,6 +25,11 @@ fi
 if [ -d ~/Development/scripts/gmail-check/ ]; then
    alias gm="~/Development/scripts/gmail-check/gmcheck.py"
 fi
+
+if [ -d ~/bin/toggleres.app/ ]; then
+   alias toggleres="open ~/bin/toggleres.app"
+fi
+
 
 
 if [ -d ~/Development/weather/ ]; then
@@ -49,8 +56,8 @@ alias mcdn="mosh unixadmin mosh ec2-52-192-238-158.ap-northeast-1.compute.amazon
 # alias mcam="mosh cam"
 # alias hammer="ssh hammer"
 
-# alias agent="eval `ssh-agent`\
-#   sleep 5 && ssh-add"
+alias agent="eval `ssh-agent`\
+  sleep 5 && ssh-add"
 
 alias whatismyip="wget http://ipinfo.io/ip -qO -"
 alias root="sudo -Es bash -l"
@@ -119,24 +126,31 @@ if [ $platform == "Darwin" ]; then
          # Move files from a given extension from a given location to another given location
          base=~/
          srcs=(Downloads Desktop)
+         src2=/Volumes/${srcs[0]}
          dst=.t????n?s
          ext=t*n*t
          IFS=$(echo -en "\n\b")
          shopt -s nullglob
-         for src in ${srcs[@]}; do
-            if [ ! -z "`echo $base${src}/*.$ext`" ];
-            then
-               for file in $base${src}/*.$ext
-               do
-                  echo "Moving `basename "$file"` ..."
-                  mv "$file" $base$dst/
-               done
-               echo "Done."
-            else
-               echo "No ${ext}s in $base${src}."
-               # return 1
-            fi
-         done
+         # for src in ${srcs[@]}; do
+         #    if [ ! -z "`echo $base${src}/*.$ext`" ];
+         #    then
+         #       for file in $base${src}/*.$ext
+         #      do
+         #          echo "Moving `basename "$file"` ..."
+         #          mv "$file" $base$dst/
+         #       done
+         #       echo "Done."
+         #    else
+         #       echo "No ${ext}s in $base${src}."
+         #       # return 1
+         #   fi
+         #i done
+         # if [ -e ${src2}/*.$ext ];
+         # then
+             mv -v ${src2}/*.$ext $base$dst/
+         # fi
+         # echo $src2
+         # echo ${src2}
          # return 1
       }
 
@@ -210,6 +224,10 @@ if [ $platform == "Darwin" ]; then
    alias o="open ."
    alias vlc="open -a vlc"
 
+   dict () {
+      open dict://$1
+   }
+   
    ql () {
       /usr/bin/env qlmanage -p "$@" &>/dev/null
    }
