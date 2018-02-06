@@ -4,12 +4,15 @@ set smartindent
 set smarttab
 set autoindent
 set printoptions=paper:letter
+
+set showmatch   " hilight matching braces
 set hlsearch    " highlight search results
 set linebreak   " linebreak on words rather than absolute line lengths
 set incsearch   " search incrementally
 set expandtab
 set modeline   " will automatically scan files for magic comments
 set nowrap
+" set so=10
 syntax on
 set ai
 
