@@ -62,6 +62,11 @@ alias mcdn="mosh unixadmin mosh ec2-52-192-238-158.ap-northeast-1.compute.amazon
 alias whatismyip="wget http://ipinfo.io/ip -qO -"
 alias root="sudo -Es bash -l"
 
+
+if [ -d "$HOME/Development/"turtlecoin-v0.7.0 ] ; then
+   alias wallet="./Development/turtlecoin-v0.7.0/zedwallet --remote-daemon mini:11898 --wallet-file ~/iCloud/Documents/Finance/Crypto/TRTL01.wallet"
+fi
+
 if [[ "$(hostname)" = *home.cli.ph* ]]; then
    homehosts=(mini tertimi dubh pi)
    for host in "${homehosts[@]}"
@@ -147,7 +152,8 @@ if [ $platform == "Darwin" ]; then
          #i done
          # if [ -e ${src2}/*.$ext ];
          # then
-             mv -v ${src2}/*.$ext $base$dst/
+             mv -v ${src2}/*.$ext $base$dst/ 2> /dev/null
+             mv -v ~/${srcs[0]}/*.$ext $base$dst/ 2> /dev/null
          # fi
          # echo $src2
          # echo ${src2}
