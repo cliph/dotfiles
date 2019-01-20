@@ -64,7 +64,8 @@ alias root="sudo -Es bash -l"
 
 
 if [ -d "$HOME/Development/"turtlecoin-v0.7.0 ] ; then
-   alias wallet="./Development/turtlecoin-v0.7.0/zedwallet --remote-daemon mini:11898 --wallet-file ~/iCloud/Documents/Finance/Crypto/TRTL01.wallet"
+   # alias wallet="./Development/turtlecoin-v0.7.0/zedwallet --remote-daemon mini:11898 --wallet-file ~/iCloud/Documents/Finance/Crypto/TRTL01.wallet"
+   alias wallet="./Development/turtlecoin/build/src/zedwallet --remote-daemon mini:11898 --wallet-file ~/iCloud/Documents/Finance/Crypto/TRTL01.wallet"
 fi
 
 if [[ "$(hostname)" = *home.cli.ph* ]]; then
@@ -187,6 +188,10 @@ if [ $platform == "Darwin" ]; then
          # --version-light 
       } 
    # fi
+
+   if [ -d /opt/local/Library/Frameworks/Python.framework/Versions/3.6/bin ]; then
+      alias rcon="/opt/local/Library/Frameworks/Python.framework/Versions/3.6/bin/ruco"
+   fi
 
    startsocks ()
    {
