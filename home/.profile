@@ -127,7 +127,7 @@ fi
 platform=`uname`
 
 if [ $platform == "Darwin" ]; then
-   mvt ()
+   mvt_old ()
       {
          # Move files from a given extension from a given location to another given location
          base=~/
@@ -160,6 +160,46 @@ if [ $platform == "Darwin" ]; then
          # echo ${src2}
          # return 1
       }
+   
+      mvt ()
+      {
+         # Move files from a given extension from a given location to another given location
+         base=~/
+         rhost=mini
+         rpath=$base.t
+         srcs=(Downloads Desktop)
+         src2=/Volumes/${srcs[0]}
+         src=~/Downloads
+         dst=.t????n?s
+         ext=t*n*t
+         IFS=$(echo -en "\n\b")
+         shopt -s nullglob
+         # for src in ${srcs[@]}; do
+         #    if [ ! -z "`echo $base${src}/*.$ext`" ];
+         #    then
+         #       for file in $base${src}/*.$ext
+         #      do
+         #          echo "Moving `basename "$file"` ..."
+         #          mv "$file" $base$dst/
+         #       done
+         #       echo "Done."
+         #    else
+         #       echo "No ${ext}s in $base${src}."
+         #       # return 1
+         #   fi
+         #i done
+         # if [ -e ${src2}/*.$ext ];
+         # then
+         echo rsync --remove-source-files -av $src/*.$ext  $rhost:$rpath
+
+             # mv -v ${src2}/*.$ext $base$dst/ 2> /dev/null
+             # mv -v ~/${srcs[0]}/*.$ext $base$dst/ 2> /dev/null
+         # fi
+         # echo $src2
+         # echo ${src2}
+         # return 1
+      }
+
 
    stopsocks () 
    {
