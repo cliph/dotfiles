@@ -4,8 +4,13 @@ if [ -d ~/Development/tremc/ ]; then
    alias btcli="~/Development/tremc/tremc"
    # alias btcli="~/Development/transmission-remote-cli/transmission-remote-cli"
    # alias bt="btcli"
-   alias bt="mvt & btcli && tsq"
+   alias bt="mvt ; btcli && tsq"
 fi
+
+if [ -d ~/Development/speedtest-cli/ ]; then
+   alias speedtest="~/Development/speedtest-cli/speedtest.py"
+fi
+
 
 if [ -d ~/Development/scripts/teksavvy/ ]; then
    # alias tsq="~/Development/scripts/teksavvy/quota.py"
@@ -190,7 +195,7 @@ if [ $platform == "Darwin" ]; then
          #i done
          # if [ -e ${src2}/*.$ext ];
          # then
-         echo rsync --remove-source-files -av $src/*.$ext  $rhost:$rpath
+         rsync --remove-source-files -av $src/*.$ext  $rhost:$rpath
 
              # mv -v ${src2}/*.$ext $base$dst/ 2> /dev/null
              # mv -v ~/${srcs[0]}/*.$ext $base$dst/ 2> /dev/null
