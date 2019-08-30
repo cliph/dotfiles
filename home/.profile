@@ -40,9 +40,17 @@ fi
 if [ -d ~/Development/weather/ ]; then
    # alias weather="pushd `pwd` > /dev/null && cd ~/Development/weather/ && ./weather -m cytz; popd > /dev/null"
    wd="~/Development/weather/"
-   alias weather="$wd/weather --setpath=$wd -m cytz"
+   # alias weather="$wd/weather --setpath=$wd -m cytz"
    unset wd
 fi
+
+weather()
+{
+    # change Paris to your default location
+    local request="wttr.in/${1-Toronto}"
+    [ "$(tput cols)" -lt 125 ] && request+='?n'
+    curl -H "Accept-Language: ${LANG%_*}" --compressed "$request"
+}
 
 if [ -x ~/Development/scripts/rustplayers ]; then
    alias wr="watch -c -d -n300 'rustplayers'"
