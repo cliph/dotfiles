@@ -48,7 +48,7 @@ weather()
 {
     # change Paris to your default location
     local request="wttr.in/${1-Toronto}"
-    [ "$(tput cols)" -lt 125 ] && request+='?QnFm'
+    [ "$(tput cols)" -lt 125 ] && request+='?QnFm&format=v2'
     curl -H "Accept-Language: ${LANG%_*}" --compressed "$request"
 }
 
