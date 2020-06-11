@@ -140,6 +140,7 @@ fi
 platform=`uname`
 
 if [ $platform == "Darwin" ]; then
+   export BASH_SILENCE_DEPRECATION_WARNING=1
    mvt_old ()
       {
          # Move files from a given extension from a given location to another given location
@@ -178,7 +179,7 @@ if [ $platform == "Darwin" ]; then
       {
          # Move files from a given extension from a given location to another given location
          base=~/
-         rhost=mini
+         rhost=mini.local
          rpath=$base.t
          srcs=(Downloads Desktop)
          src2=/Volumes/${srcs[0]}
