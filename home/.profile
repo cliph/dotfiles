@@ -63,6 +63,7 @@ fi
 # which mosh &> /dev/null
 # if [ $? -eq 0 ]; then
 alias mu="mosh unixadmin"
+alias ms="mosh staging"
 alias mc="mosh cli.ph"
 alias ma="mosh ascii"
 alias mcdn="mosh unixadmin mosh ec2-52-192-238-158.ap-northeast-1.compute.amazonaws.com"
