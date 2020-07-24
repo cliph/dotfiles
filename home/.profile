@@ -83,7 +83,7 @@ if [ -d "$HOME/Development/"turtlecoin-v0.7.0 ] ; then
 fi
 
 if [[ "$(hostname)" = *home.cli.ph* ]]; then
-   homehosts=(mini tertimi dubh pi)
+   homehosts=(mini tertimi dubh ninecoffee pi)
    for host in "${homehosts[@]}"
    do
       alias $host="ssh $host.local"
