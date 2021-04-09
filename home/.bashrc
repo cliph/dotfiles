@@ -14,6 +14,14 @@ export HISTSIZE=1000000
 
 export run_client_scripts=1
 
+case "$TERM" in
+   xterm|screen)
+      # Try to ensure we have 256 colors
+      export TERM="xterm-256color"
+   ;;
+esac
+
+
 if [ ${BASH_VERSINFO} -ge 4 ];
 then
    shopt -s autocd
