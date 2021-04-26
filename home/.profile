@@ -138,6 +138,11 @@ if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
 fi
 
+if [ -d "$HOME/Development/plan9" ] ; then
+	PLAN9=$HOME/Development/plan9 export PLAN9
+	PATH=$PATH:$PLAN9/bin export PATH
+fi
+
 platform=`uname`
 
 if [ $platform == "Darwin" ]; then
